@@ -1,5 +1,6 @@
 "use strict";
 import  { HTTP } from '../../../cut/index';
+import * as CONSTANTS from '../../../constants/orchestrator.constants';
 
 /**
  * Only an administrator should be able to get the access token
@@ -12,12 +13,12 @@ import  { HTTP } from '../../../cut/index';
 export function  getAccessToken( body ,callback) {
 
     const  options = {
-        host: 'localhost',
-        port: 9200,
-        path: '/api/v1/authenticate',
-        method: 'POST',
+        host: CONSTANTS.ORCHORCHESTRATOR_HOST,
+        port: CONSTANTS.ORCHESTRATOR_PORT,
+        path: CONSTANTS.AUHTENTICATION_PATH,
+        method: CONSTANTS.POST,
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': CONSTANTS.CONTENT_TYPE_JSON
         }
     }
 
@@ -37,13 +38,13 @@ export function  getAccessToken( body ,callback) {
 export function  getUserByName(name,accesskey,callback) {
 
     const options = {
-        host: 'localhost',
-        port: 9100,
-        path: '/api/v1/user/username/'+ name,
-        method: 'GET',
+        host: CONSTANTS.MICROSERVICES_HOST,
+        port: CONSTANTS.MICROSERVICES_PORT ,
+        path: CONSTANTS.USER_PATH + name,
+        method: CONSTANTS.GET,
         headers: {
-            accept: 'application/json',
-            authorization:accesskey
+            accept: CONSTANTS.CONTENT_TYPE_JSON ,
+            authorization:CONSTANTS.ACCESS_KEY
         }
     };
 
@@ -62,13 +63,13 @@ export function  getUserByName(name,accesskey,callback) {
 export function  getRoleByName(name,accesskey,callback) {
 
     const options = {
-        host: 'localhost',
-        port: 9100,
-        path: '/api/v1/roles/name/' + name,
-        method: 'GET',
+        host: CONSTANTS.MICROSERVICES_HOST,
+        port: CONSTANTS.MICROSERVICES_PORT,
+        path: CONSTANTS.ROLE_PATH + name,
+        method: CONSTANTS.GET,
         headers: {
-            accept: 'application/json',
-            authorization:accesskey
+            accept: CONSTANTS.CONTENT_TYPE_JSON ,
+            authorization:CONSTANTS.ACCESS_KEY
         }
     };
 
@@ -87,38 +88,13 @@ export function  getRoleByName(name,accesskey,callback) {
 export function  getTokenFromRedis(name,accesskey,callback) {
 
     const options = {
-        host: 'localhost',
-        port: 9000,
-        path: '/api/v1/infrastructure/redis/' + name,
-        method: 'GET',
+        host: CONSTANTS.BACKEND_HOST,
+        port: CONSTANTS.BACKEND_PORT ,
+        path: CONSTANTS.REDIS_PATH + name,
+        method: CONSTANTS.GET,
         headers: {
-            accept: 'application/json',
-            authorization:accesskey
-        }
-    };
-
-    HTTP.get(options, (result) => {
-        return callback(result);
-    });
-}
-
-
-/**
- * set the token in the cache
- * @param body
- * @param callback
- */
-
-export function  getTokenFromRedis(name,accesskey,callback) {
-
-    const options = {
-        host: 'localhost',
-        port: 9000,
-        path: '/api/v1/infrastructure/redis/' + name,
-        method: 'GET',
-        headers: {
-            accept: 'application/json',
-            authorization:accesskey
+            accept: CONSTANTS.CONTENT_TYPE_JSON ,
+            authorization:CONSTANTS.ACCESS_KEY
         }
     };
 
@@ -130,14 +106,14 @@ export function  getTokenFromRedis(name,accesskey,callback) {
 export function  setTokenToRedis(body,accesskey,callback) {
 
     const options = {
-        host: 'localhost',
-        port: 9000,
-        path: '/api/v1/infrastructure/redis/' ,
-        method: 'POST',
+        host: CONSTANTS.BACKEND_HOST,
+        port: CONSTANTS.BACKEND_PORT ,
+        path: CONSTANTS.REDIS_PATH ,
+        method: CONSTANTS.POST,
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': CONSTANTS.CONTENT_TYPE_XML,
             'Content-Length':JSON.stringify(body).length,
-            authorization:accesskey
+             authorization:CONSTANTS.ACCESS_KEY
         }
     };
 
