@@ -13,7 +13,7 @@ const response = require('./components/responses/cut.components.responses');
 const  authentications = require('./middleware/security/cut.security.utils');
 const models = require('./components/db/mongo/cut.components.db.mongo.model');
 // ROUTERS
-export const cranberryRouter = router;
+export const cutRouter = router;
 
 // MODULES
 export const LRU = lru;

@@ -1,9 +1,8 @@
 
-import { cranberryRouter  } from  '../../../cut/index';
-import  * as  MandalaController from './jwt.orchestrator.controller';
+import { cutRouter  } from  '../../../cut/index';
+import  * as  JWTController from './jwt.orchestrator.controller';
 
-export const MandalaRouter = cranberryRouter;
+export const JWTRouter = cutRouter;
 
-MandalaRouter.post('/api/v1/jwttoken/',MandalaController.getJWToken);
+JWTRouter.post('/api/v1/jwttoken/',JWTController.getJWToken);
 
-// MandalaRouter.get('/api/v1/jwttoken/',MandalaController.validateJWToken);

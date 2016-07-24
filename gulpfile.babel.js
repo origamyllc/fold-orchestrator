@@ -11,6 +11,8 @@ const redis = require("redis");
 const relational = require('orm');
 const amqp = require('amqp');
 const path = require('path');
+const pm2 = require('pm2');
+
 import { devConfig } from  './src/config/env/dev';
 import { integrationConfig } from  './src/config/env/integration'
 import { productionConfig } from  './src/config/env/prod'

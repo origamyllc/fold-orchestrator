@@ -5,7 +5,7 @@ import { productionConfig } from  '../config/env/prod.js'
 import { qaConfig } from  '../config/env/qa.js'
 import { stressConfig } from  '../config/env/stress.js'
 
-let config = null;
+let config = devConfig;
 
 if ( process.env.NODE_ENV === 'development') {
     config = devConfig;
@@ -27,6 +27,7 @@ if ( process.env.NODE_ENV === 'stress' ){
     config = stressConfig;
 }
 
+console.log(config)
 
 export const ACCESS_KEY =  config.microservices.accsesskey;
 
