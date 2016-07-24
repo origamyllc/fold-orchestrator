@@ -1,5 +1,32 @@
 
-import { config } from  '../config.js'
+import { devConfig } from  '../config/env/dev.js'
+import { integrationConfig } from  '../config/env/integration.js'
+import { productionConfig } from  '../config/env/prod.js'
+import { qaConfig } from  '../config/env/qa.js'
+import { stressConfig } from  '../config/env/stress.js'
+
+let config = null;
+
+if ( process.env.NODE_ENV === 'development') {
+    config = devConfig;
+}
+
+if ( process.env.NODE_ENV === 'integration' ){
+    config = integrationConfig;
+}
+
+if ( process.env.NODE_ENV === 'production' ){
+    config = productionConfig;
+}
+
+if ( process.env.NODE_ENV === 'qa' ){
+    config = qaConfig ;
+}
+
+if ( process.env.NODE_ENV === 'stress' ){
+    config = stressConfig;
+}
+
 
 export const ACCESS_KEY =  config.microservices.accsesskey;
 

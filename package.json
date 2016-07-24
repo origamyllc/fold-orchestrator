@@ -6,8 +6,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src -d build",
-    "gulp": "gulp --enviornment development",
-    "start": "npm run build && npm run gulp"
+    "gulp:dev": "gulp --enviornment development",
+    "gulp:int":"gulp --enviornment integration",
+    "gulp:prod":"gulp --enviornment production",
+    "gulp:qa":"gulp --enviornment qa",
+    "gulp:stress":"gulp --enviornment stress",
+    "build:dev": "npm run build && npm run gulp:dev",
+    "build:int" : "npm run build && npm run gulp:int",
+    "build:prod" : "npm run build && npm run gulp:prod",
+    "build:qa" : "npm run build && npm run gulp:qa",
+    "build:stress" : "npm run build && npm run gulp:stress"
   },
   "keywords": [],
   "author": "",

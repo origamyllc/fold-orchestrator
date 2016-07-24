@@ -11,8 +11,11 @@ const redis = require("redis");
 const relational = require('orm');
 const amqp = require('amqp');
 const path = require('path');
-
-//import * as mongoose from './microservices/lib/components/db/mongo/mongoose-middleware';
+import { devConfig } from  './src/config/env/dev';
+import { integrationConfig } from  './src/config/env/integration'
+import { productionConfig } from  './src/config/env/prod'
+import { qaConfig } from  './src/config/env/qa'
+import { stressConfig } from  './src/config/env/stress'
 
 require('babel-register')({
     "presets": ["es2015"]
@@ -27,26 +30,29 @@ gulp.task('set:enviornment', () => {
     if(args.enviornment.NODE_ENV === 'development') {
         process.env.NODE_ENV = 'development';
     }
+    if(args.enviornment.NODE_ENV === 'integration') {
+        process.env.NODE_ENV = 'integration';
+    }
+    if(args.enviornment.NODE_ENV === 'production') {
+        process.env.NODE_ENV = 'production';
+    }
+    if(args.enviornment.NODE_ENV === 'qa') {
+        process.env.NODE_ENV = 'qa';
+    }
+    if(args.enviornment.NODE_ENV === 'stress') {
+        process.env.NODE_ENV = 'stress';
+    }
 });
 
 // start our server and listen for changes
 gulp.task('server:start', (cb) => {
-    gulp.start('server:development', cb);
+        gulp.start('server:build', cb);
 });
 
-const config = function getConfiguration () {
-    // Application Config
-    let conf = null;
 
-    if (process.env.NODE_ENV === 'development') {
-        conf = require('./config/enviornment/development');
-    }
-
-    return conf;
-}
 
 // run the server
-gulp.task('server:development',  () => {
+gulp.task('server:build',  () => {
     // configure nodemon
     nodemon({
         // the script to run the app
@@ -58,3 +64,30 @@ gulp.task('server:development',  () => {
         env: config.NODE_ENV
     });
 });
+
+const config = function getConfiguration () {
+    // Application Config
+    let conf = null;
+
+    if (process.env.NODE_ENV === 'development') {
+        conf =  devConfig;
+    }
+    if ( process.env.NODE_ENV === 'integration' ){
+        conf = integrationConfig;
+    }
+
+    if ( process.env.NODE_ENV === 'production' ){
+        conf = productionConfig;
+    }
+
+    if ( process.env.NODE_ENV === 'qa' ){
+        conf = qaConfig ;
+    }
+
+    if ( process.env.NODE_ENV === 'stress' ){
+        conf = stressConfig;
+    }
+
+
+    return conf;
+}

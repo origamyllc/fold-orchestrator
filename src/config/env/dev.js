@@ -1,9 +1,10 @@
-export const config = {
+export  const devConfig = {
+    NODE_ENV:'development',
     orchestrator:{
         host: process.env.ORCHESTRATOR_HOST || 'localhost',
         port: process.env.ORCHESTRATOR_PORT || 9200,
         paths: {
-           authenticate : '/api/v1/authenticate'
+            authenticate : '/api/v1/authenticate'
         }
     },
     microservices:{
@@ -11,10 +12,10 @@ export const config = {
         port: process.env.MICROSERVICES_PORT || 9100,
         accsesskey : process.env.ACCESS_KEY || 'Basic jghsdkgfuyeuyertwgdhgjfhjgjkgklugtrgdhgd',
         paths:{
-          oauth:process.env.OAUTH_MICROSERVICE_PATH || '/api/oauth2/v1/login',
-          token:process.env.TOKEN_MICROSERVICE_PATH || '/api/v1/tokens/',
-          user:process.env.USER_MICROSERVICE_PATH   || '/api/v1/user/username/',
-          role:process.env.ROLE_MICROSERVICE_PATH   || '/api/v1/roles/name/'
+            oauth:process.env.OAUTH_MICROSERVICE_PATH || '/api/oauth2/v1/login',
+            token:process.env.TOKEN_MICROSERVICE_PATH || '/api/v1/tokens/',
+            user:process.env.USER_MICROSERVICE_PATH   || '/api/v1/user/username/',
+            role:process.env.ROLE_MICROSERVICE_PATH   || '/api/v1/roles/name/'
         }
     },
     backend:{
