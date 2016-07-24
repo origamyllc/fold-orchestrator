@@ -27,8 +27,6 @@ if ( process.env.NODE_ENV === 'stress' ){
     config = stressConfig;
 }
 
-console.log(config)
-
 export const ACCESS_KEY =  config.microservices.accsesskey;
 
 export const MICROSERVICES_PORT = config.microservices.port;
