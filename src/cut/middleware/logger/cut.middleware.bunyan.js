@@ -16,5 +16,15 @@ export const  logger = bunyan.createLogger({
             type: 'raw',
             stream: prettyStdOut
         },
+        {
+            level: 'debug',
+            type: 'raw',
+            stream: prettyStdOut
+        },
+        {
+            level: 'error',
+            type: 'raw',
+            stream: prettyStdOut
+        },
     ]
 });

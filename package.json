@@ -6,7 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src -d build",
-    "pm2:start": "pm2 start build/server.js -i 0 && pm2 monit && pm2 logs",
     "gulp:dev": "gulp --enviornment development",
     "gulp:int": "gulp --enviornment integration",
     "gulp:prod": "gulp --enviornment production",
