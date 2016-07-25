@@ -29,6 +29,4 @@ export  const qaConfig = {
         }
     }
 }
-/**
- * Created by prashun on 7/24/16.
- */
+

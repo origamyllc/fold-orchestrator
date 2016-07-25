@@ -2,7 +2,7 @@
  * Created by prashun on 7/24/16.
  */
 export  const integrationConfig = {
-    NODE_ENV:'development',
+    NODE_ENV:'integration',
     orchestrator:{
         host: process.env.ORCHESTRATOR_HOST || 'integration',
         port: process.env.ORCHESTRATOR_PORT || 9200,

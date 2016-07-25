@@ -29,6 +29,4 @@ export  const stressConfig = {
         }
     }
 }
-/**
- * Created by prashun on 7/24/16.
- */
+
