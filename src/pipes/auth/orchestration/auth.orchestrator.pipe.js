@@ -2,7 +2,6 @@
 import { responses } from '../../../cut/index';
 import * as OrchestratorUtils from './auth.orchestrator.fascade';
 
-//TODO: add logging ..
 
 export function authenticationPipe(req,res){
     req.log.info({message:"login in  user .." + req.body.username});
@@ -18,6 +17,7 @@ export function authenticationPipe(req,res){
                 return token.docs[0].accessToken
             }).then((accessToken) => {
                 if (accessToken) {
+                    // save the token in a  LRU cache
                     res.setHeader("authorization", accessToken);
                     responses.sendResponse(res, {"message": "authorized"})
                 } else {
@@ -28,4 +28,9 @@ export function authenticationPipe(req,res){
             }));
          }))
     });
+}
+
+export function refreshAccessTokenPipe (req,res){
+    // generate new access token and update token value
+    // clear lru
 }

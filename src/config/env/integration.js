@@ -27,5 +27,11 @@ export  const integrationConfig = {
         paths: {
             redis:  process.env.REDIS_PATH || '/api/v1/infrastructure/redis/'
         }
+    },
+    lru: {
+        options: {
+            max: 500,
+            maxAge: 1000 * 60 * 60
+        }
     }
 }

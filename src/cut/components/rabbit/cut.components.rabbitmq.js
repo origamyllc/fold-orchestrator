@@ -8,7 +8,7 @@ let queues = {};
 import Promise from 'bluebird';
 import { config } from '../../config/env/cut.config.dev'
 
-const connection =  amqp.createConnection(config.rabbit);
+const connection =  amqp.createConnection({ host: 'dev.rabbitmq.com' });
 
 export function createExchange(name,options){
     return new Promise ( (resolve) => {

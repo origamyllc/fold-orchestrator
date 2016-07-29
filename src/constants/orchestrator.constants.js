@@ -42,8 +42,10 @@ export const USER_PATH =  config.microservices.paths.user;
 export const TOKEN_PATH = config.microservices.paths.token;
 export const ROLE_PATH = config.microservices.paths.role;
 
+export const LRU_OPTIONS = config.lru.options;
 export const AUHTENTICATION_PATH = config.orchestrator.paths.authenticate;
 export const REDIS_PATH = config.backend.paths.redis ;
+
 
 export const POST = 'POST';
 export const GET ='GET';

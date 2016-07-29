@@ -1,10 +1,8 @@
 "use strict";
 
-import { responses } from '../../../cut/index';
+import { responses,LRU } from '../../../cut/index';
 import * as OrchestratorFascade from './jwt.orchestrator.fascade';
 const  jwt = require('jsonwebtoken');
-
-// TODO : add logging
 
 export function getJWToken(req,res){
     let jwtObj = {};
@@ -24,7 +22,9 @@ export function getJWToken(req,res){
                     jwtObj.claims = roles.docs[0].claims;
                     OrchestratorFascade.getTokenFromRedis(jwtObj.username,accesskey).then((token) =>{
                         if(token.status === 500){
+                            LRU.set(accesskey);
                             req.log.info({message:"adding key to cache.." });
+                            // TODO: add pem key to secure the JWT
                             var obj = { key: accesskey, value :jwt.sign(jwtObj, 'shhhhh')};
                             OrchestratorFascade.setTokenToRedis(obj,accesskey);
                         }
