@@ -24,7 +24,6 @@ function getRequestMetadata(req) {
         platform: req.useragent.platform,
         url:req.url,
         method: req.method,
-        user: req.user || {},
         body: req.body
     });
 

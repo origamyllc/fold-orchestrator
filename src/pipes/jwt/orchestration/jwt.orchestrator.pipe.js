@@ -26,7 +26,7 @@ export function getJWToken(req,res){
                             req.log.info({message:"adding key to cache.." });
                             // TODO: add pem key to secure the JWT
                             var obj = { key: accesskey, value :jwt.sign(jwtObj, 'shhhhh')};
-                            OrchestratorFascade.setTokenToRedis(obj,accesskey);
+                            OrchestratorFascade.setTokenToRedis(jwtObj.username,accesskey);
                         }
                     });
                     res.setHeader("authorization",   jwt.sign(jwtObj, 'shhhhh'));
