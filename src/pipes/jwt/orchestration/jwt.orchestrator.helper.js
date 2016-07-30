@@ -85,12 +85,12 @@ export function  getRoleByName(name,accesskey,callback) {
 * @param callback
 */
 
-export function  getTokenFromRedis(name,accesskey,callback) {
+export function  getJWTTokenByAccessToken(accesskey,callback) {
 
     const options = {
         host: CONSTANTS.BACKEND_HOST,
         port: CONSTANTS.BACKEND_PORT ,
-        path: CONSTANTS.REDIS_PATH + name,
+        path: CONSTANTS.REDIS_PATH + accesskey,
         method: CONSTANTS.GET,
         headers: {
             accept: CONSTANTS.CONTENT_TYPE_JSON ,

@@ -1,5 +1,5 @@
 
-import { responses } from '../../../cut/index';
+import { responses,LRU } from '../../../cut/index';
 import * as OrchestratorUtils from './auth.orchestrator.fascade';
 
 
@@ -31,6 +31,6 @@ export function authenticationPipe(req,res){
 }
 
 export function refreshAccessTokenPipe (req,res){
-    // generate new access token and update token value
-    // clear lru
+   console.log( LRU.keys() );
+
 }

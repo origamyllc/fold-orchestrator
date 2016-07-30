@@ -28,9 +28,9 @@ export function getRoleByName (name,accesskey) {
     });
 }
 
-export function getTokenFromRedis(name,accesskey){
+export function getJWTTokenByAccessToken(accesskey){
     return new Promise((resolve) => {
-        MandalaHelper.getTokenFromRedis(name,accesskey, (result) => {
+        MandalaHelper.getJWTTokenByAccessToken(accesskey, (result) => {
             resolve(result);
         });
     });

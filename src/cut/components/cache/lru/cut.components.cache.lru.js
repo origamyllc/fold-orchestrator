@@ -33,3 +33,7 @@ export function clear() {
 export function hasKey(key) {
     return cache.has(key);
 }
+
+export function keys() {
+    return cache.keys();
+}

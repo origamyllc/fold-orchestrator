@@ -7,7 +7,6 @@ const prettyStdOut = new PrettyStream();
 
 prettyStdOut.pipe(process.stdout);
 
-//Todo : move to config
 export const  logger = bunyan.createLogger({
     name: 'jibreel',
     streams: [

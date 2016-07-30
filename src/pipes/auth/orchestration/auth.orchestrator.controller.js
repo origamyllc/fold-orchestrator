@@ -4,5 +4,6 @@ export function authenticate(req,res) {
     Workflow.authenticationPipe(req,res);
 }
 
-
-
+export function refreshAccessToken(req,res) {
+    Workflow.refreshAccessTokenPipe(req, res);
+}
