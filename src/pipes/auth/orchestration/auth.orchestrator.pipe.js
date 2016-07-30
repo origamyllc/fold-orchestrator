@@ -31,6 +31,9 @@ export function authenticationPipe(req,res){
 }
 
 export function refreshAccessTokenPipe (req,res){
-   console.log( LRU.keys() );
 
+    let keys =  LRU.keys();
+    for(let index in keys){
+        console.log(keys[index])
+    }
 }
