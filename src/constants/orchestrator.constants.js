@@ -49,6 +49,8 @@ export const REDIS_PATH = config.backend.paths.redis ;
 
 export const POST = 'POST';
 export const GET ='GET';
+export const DELETE ='DELETE';
+export const PUT ='PUT';
 
 export const CONTENT_TYPE_JSON = 'application/json';
 export const CONTENT_TYPE_XML = 'application/x-www-form-urlencoded';

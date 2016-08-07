@@ -20,12 +20,12 @@ export function getJWToken(req,res){
                 req.log.info({message:"getting  role for " + jwtObj.roles[0]});
                 OrchestratorFascade.getRoleByName(jwtObj.roles, accesskey).then((roles) => {
                     jwtObj.claims = roles.docs[0].claims;
-                    OrchestratorFascade.getJWTTokenByAccessToken(accesskey.split(" ")[1]).then((token) =>{
-                        LRU.set(accesskey.split(" ")[1]);
+                    OrchestratorFascade.getJWTTokenByAccessToken(accesskey).then((token) =>{
+                        LRU.set(accesskey);
                         if(token.status === 500){
                             req.log.info({message:"adding key to cache.." });
                             // TODO: add pem key to secure the JWT
-                            var obj = { key: accesskey.split(" ")[1], value :jwt.sign(jwtObj, 'shhhhh')};
+                            var obj = { key: accesskey, value :jwt.sign(jwtObj, 'shhhhh')};
                             OrchestratorFascade.setTokenToRedis(obj,accesskey);
                         }
                     });

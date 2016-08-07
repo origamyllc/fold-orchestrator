@@ -27,3 +27,42 @@ export function getTokenByUserId(id){
     });
 }
 
+export function getJWTTokenByAccessToken(accesskey){
+    return new Promise((resolve) => {
+        LoginHelper.getJWTTokenByAccessToken(accesskey, (result) => {
+            resolve(result);
+        });
+    });
+}
+
+export function deleteAccessToken(accesskey){
+    return new Promise((resolve) => {
+        LoginHelper.deleteAccessToken(accesskey, (result) => {
+            resolve(result);
+        });
+    });
+}
+
+export function setTokenToRedis(body){
+    return new Promise((resolve) => {
+        LoginHelper.setTokenToRedis(body, (result) => {
+            resolve(result);
+        });
+    });
+}
+
+export function getAccessToken(token){
+    return new Promise((resolve) => {
+        LoginHelper.getAccessToken(token,(result) => {
+            resolve(result);
+        });
+    });
+}
+
+export function  updateAccessToken(userId,body){
+    return new Promise((resolve) => {
+        LoginHelper.updateAccessToken(userId,body,(result) => {
+            resolve(result);
+        });
+    });
+}
