@@ -97,7 +97,7 @@ export function put(options,body,callback){
 
         res.setEncoding('utf8');
         res.on('data', (chunk) => {
-            console.log(`BODY: ${chunk}`);
+          //  console.log(`BODY: ${chunk}`);
         });
         res.on('end', () => {
             console.log('No more data in response.');
