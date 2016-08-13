@@ -1,11 +1,7 @@
 'use strict';
 
-const LRU= require('lru-cache');
-import * as CONSTANTS from '../../../../constants/orchestrator.constants';
-
-const options = CONSTANTS.LRU_OPTIONS
-    , cache = LRU(options)
-
+const LRUCache = require('lru-cache');
+const cache = LRUCache(1000);
 
 export function get(key, cb) {
     cb(cache.get(key));
@@ -34,6 +30,7 @@ export function hasKey(key) {
     return cache.has(key);
 }
 
-export function keys() {
-    return cache.keys();
+export function keys(){
+    return  cache.keys();
 }
+

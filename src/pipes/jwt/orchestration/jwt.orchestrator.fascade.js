@@ -1,44 +1,43 @@
 
-import * as MandalaHelper from './jwt.orchestrator.helper';
+import * as jwt_token_helper from './jwt.orchestrator.helper';
 const Promise = require("bluebird");
-const crypto = require('crypto');
 
-export function getAccessToken(body) {
+export function get_access_token(body) {
     return new Promise((resolve) => {
-        MandalaHelper.getAccessToken(body, (result) => {
+        jwt_token_helper.get_access_token(body, (result) => {
             resolve(result);
         });
     });
 }
 
-export function getUserByName(name,accesskey) {
+export function get_user_by_name(user_name) {
     return new Promise((resolve) => {
-        MandalaHelper.getUserByName(name,accesskey, (result) => {
+        jwt_token_helper.get_user_by_name(user_name,(result) => {
             resolve(result);
         });
     });
 }
 
 
-export function getRoleByName (name,accesskey) {
+export function get_role_by_user_name (user_name) {
     return new Promise((resolve) => {
-        MandalaHelper.getRoleByName(name,accesskey, (result) => {
+        jwt_token_helper.get_role_by_user_name(user_name,(result) => {
             resolve(result);
         });
     });
 }
 
-export function getJWTTokenByAccessToken(accesskey){
+export function get_jwt_token_by_access_token(access_key){
     return new Promise((resolve) => {
-        MandalaHelper.getJWTTokenByAccessToken(accesskey, (result) => {
+        jwt_token_helper.get_jwt_token_by_access_token(access_key, (result) => {
             resolve(result);
         });
     });
 }
 
-export function  setTokenToRedis(body,accesskey){
+export function  set_token_in_cache(body){
     return new Promise((resolve) => {
-        MandalaHelper.setTokenToRedis(body, accesskey,(result) => {
+        jwt_token_helper.set_token_in_cache(body,(result) => {
             resolve(result);
         });
     });

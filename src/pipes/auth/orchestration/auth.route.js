@@ -1,9 +1,8 @@
 
 import { cutRouter  } from  '../../../cut/index';
-import  * as  authenticationController from './auth.orchestrator.controller';
+import  * as  authentication_controller from './auth.orchestrator.controller';
 
-export const authenticationRouter = cutRouter;
+export const authentication_router = cutRouter;
 
-
-authenticationRouter.get('/api/v1/refreshtokens',authenticationController.refreshAccessToken);
-authenticationRouter.post('/api/v1/authenticate',authenticationController.authenticate);
+authentication_router.get('/api/v1/refreshtokens',authentication_controller.refresh_access_token);
+authentication_router.post('/api/v1/authenticate',authentication_controller.authenticate);

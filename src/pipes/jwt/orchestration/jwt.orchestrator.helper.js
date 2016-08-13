@@ -3,14 +3,11 @@ import  { HTTP } from '../../../cut/index';
 import * as CONSTANTS from '../../../constants/orchestrator.constants';
 
 /**
- * Only an administrator should be able to get the access token
- * current administrator is
- * username : joeyfatone
- * password : administrator
+ * get the access token using the username and password
  * @param body
  * @param callback
  */
-export function  getAccessToken( body ,callback) {
+export function  get_access_token( body ,callback) {
 
     const  options = {
         host: CONSTANTS.ORCHORCHESTRATOR_HOST,
@@ -29,18 +26,17 @@ export function  getAccessToken( body ,callback) {
 }
 
 /**
- * Once the Administator has the Access token
- * Administrator should be able to get user
+ * get the user object by user name
  * @param body
  * @param callback
  */
 
-export function  getUserByName(name,accesskey,callback) {
+export function  get_user_by_name(user_name,callback) {
 
     const options = {
         host: CONSTANTS.MICROSERVICES_HOST,
         port: CONSTANTS.MICROSERVICES_PORT ,
-        path: CONSTANTS.USER_PATH + name,
+        path: CONSTANTS.USER_PATH + user_name,
         method: CONSTANTS.GET,
         headers: {
             accept: CONSTANTS.CONTENT_TYPE_JSON ,
@@ -55,17 +51,16 @@ export function  getUserByName(name,accesskey,callback) {
 
 
 /**
- * Once the Administator has the user
- * Administrator should be able to get roles
+ * get the user role by the username
  * @param body
  * @param callback
  */
-export function  getRoleByName(name,accesskey,callback) {
+export function  get_role_by_user_name(user_name,callback) {
 
     const options = {
         host: CONSTANTS.MICROSERVICES_HOST,
         port: CONSTANTS.MICROSERVICES_PORT,
-        path: CONSTANTS.ROLE_PATH + name,
+        path: CONSTANTS.ROLE_PATH + user_name,
         method: CONSTANTS.GET,
         headers: {
             accept: CONSTANTS.CONTENT_TYPE_JSON ,
@@ -79,18 +74,17 @@ export function  getRoleByName(name,accesskey,callback) {
 }
 
 /**
-* Once the Administator has the claim
-* Administrator should be able to get jwt token frm cache
+ * get the jwt token with the help of access token
 * @param body
 * @param callback
 */
 
-export function  getJWTTokenByAccessToken(accesskey,callback) {
+export function get_jwt_token_by_access_token(access_key,callback) {
 
     const options = {
         host: CONSTANTS.BACKEND_HOST,
         port: CONSTANTS.BACKEND_PORT ,
-        path: CONSTANTS.REDIS_PATH + accesskey,
+        path: CONSTANTS.REDIS_PATH + access_key,
         method: CONSTANTS.GET,
         headers: {
             accept: CONSTANTS.CONTENT_TYPE_JSON ,
@@ -103,7 +97,7 @@ export function  getJWTTokenByAccessToken(accesskey,callback) {
     });
 }
 
-export function  setTokenToRedis(body,accesskey,callback) {
+export function  set_token_in_cache(body,callback) {
 
     const options = {
         host: CONSTANTS.BACKEND_HOST,
@@ -120,4 +114,6 @@ export function  setTokenToRedis(body,accesskey,callback) {
     HTTP.post(options ,body,(result) => {
         return callback(result);
     });
+
+
 }

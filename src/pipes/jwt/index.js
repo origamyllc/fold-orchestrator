@@ -1,5 +1,5 @@
 
-import { JWTRouter } from './orchestration/jwt.route';
+import { jwt_router } from './orchestration/jwt.route';
 import { app,router } from '../../cut/middleware/cut.express';
 
-app.use( JWTRouter  );
+app.use( jwt_router  );

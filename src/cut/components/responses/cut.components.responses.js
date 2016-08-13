@@ -32,12 +32,6 @@ export function sendResponse(res,obj ){
 
 }
 
-export function  sendSuccess(obj){
-    return new Promise( (resolve) => {
-        resolve({ response:getSucessResponse(obj),status: 200 } );
-    });
-}
-
 
  function  sendError(obj){
     let error = errors.InternalServerError({
@@ -47,22 +41,25 @@ export function  sendSuccess(obj){
         details: obj.details
     });
 
-    return new Promise( (resolve) => {
+    new Promise( (resolve) => {
         resolve( error );
     });
+
+
 }
 
 export function sendSuccessResponse(res ,obj){
     logger.info({ response:getSucessResponse(obj) , status: 200 });
-    sendSuccess(obj).then((response) => {
+    let response = { response:getSucessResponse(obj),status: 200 }
         res.status(200).json(response)
-    });
 
 }
 
 export function sendErrorResponse(res ,obj){
     sendError(obj).then((error) => {
         res.status(500).json(error)
+        return null;
     });
+
 }
 

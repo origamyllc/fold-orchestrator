@@ -1,13 +1,10 @@
-import * as Workflow from './jwt.orchestrator.pipe';
+import * as work_flows from './jwt.orchestrator.pipe';
 
 /**
- * 1)  for the given user
- * 2)  get the access token
- * 3)  if the access token exists then generate jwt token
  * @param req,res
  * @param jwttoken
  */
-export function getJWToken(req,res) {
-    Workflow.getJWToken(req,res);
+export function get_jwt_token(req,res) {
+    work_flows.get_jwt_token(req,res);
 }
 

@@ -1,67 +1,67 @@
 
-import * as LoginHelper from './auth.orchestrator.helper';
+import * as login_helper from './auth.orchestrator.helper';
 const Promise = require("bluebird");
-const crypto = require('crypto');
 
-export function getUserByNameAsynchronously(name) {
+
+export function get_user_by_name(user_name) {
     return new Promise((resolve) => {
-        LoginHelper.getUserByName(name, (result) => {
+        login_helper.get_user_by_name(user_name, (result) => {
             resolve(result);
         });
     });
 }
 
-export function loginAsynchronously(req) {
+export function login_user(req) {
     return new Promise((resolve) => {
-        LoginHelper.login(req.body, (result) => {
+        login_helper.login_user(req.body, (result) => {
             resolve(result);
         });
     });
 }
 
-export function getTokenByUserId(id){
+export function get_user_token_by_id(user_id){
     return new Promise((resolve) => {
-        LoginHelper.getTokenByUserId(id, (result) => {
+        login_helper.get_user_token_by_id(user_id, (result) => {
             resolve(result);
         });
     });
 }
 
-export function getJWTTokenByAccessToken(accesskey){
+export function get_jwt_by_access_token(access_key){
     return new Promise((resolve) => {
-        LoginHelper.getJWTTokenByAccessToken(accesskey, (result) => {
+        login_helper.get_jwt_by_access_token(access_key, (result) => {
             resolve(result);
         });
     });
 }
 
-export function deleteAccessToken(accesskey){
+export function delete_access_token(access_key){
     return new Promise((resolve) => {
-        LoginHelper.deleteAccessToken(accesskey, (result) => {
+        login_helper.delete_access_token(access_key, (result) => {
             resolve(result);
         });
     });
 }
 
-export function setTokenToRedis(body){
+export function set_token_in_cache(body){
     return new Promise((resolve) => {
-        LoginHelper.setTokenToRedis(body, (result) => {
+        login_helper.set_token_in_cache(body, (result) => {
             resolve(result);
         });
     });
 }
 
-export function getAccessToken(token){
+export function get_access_token(token){
     return new Promise((resolve) => {
-        LoginHelper.getAccessToken(token,(result) => {
+        login_helper.get_access_token(token,(result) => {
             resolve(result);
         });
     });
 }
 
-export function  updateAccessToken(userId,body){
+export function  update_access_token(user_id,body){
     return new Promise((resolve) => {
-        LoginHelper.updateAccessToken(userId,body,(result) => {
+        login_helper.update_access_token(user_id,body,(result) => {
             resolve(result);
         });
     });

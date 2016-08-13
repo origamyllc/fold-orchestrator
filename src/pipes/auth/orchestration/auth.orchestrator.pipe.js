@@ -1,66 +1,58 @@
 import { responses,LRU } from '../../../cut/index';
-import * as
-OrchestratorUtils
-from
-'./auth.orchestrator.fascade';
+import * as authentication_fascade from './auth.orchestrator.fascade';
 const uuid = require('node-uuid');
 
-export function authenticationPipe(req, res) {
+export function authenticate(req, res) {
     req.log.info({message: "login in  user .." + req.body.username});
-    Promise.resolve(OrchestratorUtils.loginAsynchronously(req)).then((result) => {
+    Promise.resolve(authentication_fascade.login_user(req)).then((result) => {
         return JSON.parse(result)["username"];
-    }).then(function (username) {
+    }).then(function (user_name) {
         req.log.info({message: "getting user details by name  .." + req.body.username});
-        Promise.resolve(OrchestratorUtils.getUserByNameAsynchronously(username).then((user) => {
+        Promise.resolve(authentication_fascade.get_user_by_name(user_name).then((user) => {
                 return user.docs[0]._id;
-            }).then((userId) => {
-                req.log.info({message: "getting token by id   .." + userId});
-                Promise.resolve(OrchestratorUtils.getTokenByUserId(userId).then((token) => {
-                    return token.docs[0].accessToken
-                }).then((accessToken) => {
-                    if (accessToken) {
-                        // save the token in a  LRU cache
-                        res.setHeader("authorization", accessToken);
+            }).then((user_id) => {
+                req.log.info({message: "getting token by id   .." + user_id});
+                Promise.resolve(authentication_fascade.get_user_token_by_id(user_id).then((token) => {
+                    return token.docs[0].accessTokenss
+                }).then((access_token) => {
+                    if (access_token) {
+                        res.setHeader("authorization", access_token);
                         responses.sendResponse(res, {"message": "authorized"})
                     } else {
-                        sendUnauthorizedError(req, res);
+                        send_unauthorized_user_error(req, res);
                     }
                 }));
             }).catch(() => {
-                sendUnauthorizedError(req, res);
+                send_unauthorized_user_error(req, res);
             })
         )
     });
 }
 
-export function refreshAccessTokenPipe(req, res) {
+export function refresh_access_token(req, res) {
     return new Promise((resolve) => {
         let keys = LRU.keys();
         for (let index in keys) {
-            OrchestratorUtils.getJWTTokenByAccessToken(keys[index]).then((jwtToken)=> {
-                if (jwtToken && jwtToken.response) {
-                    let token = jwtToken.response.value;
-                    OrchestratorUtils.deleteAccessToken(keys[index]);
+            console.log("processed token ::"+ keys[index]);
+            authentication_fascade.get_jwt_by_access_token( keys[index]).then((jwt_token)=> {
+                if (jwt_token && jwt_token.response) {
+                    let token = jwt_token.response.value;
+                    authentication_fascade.delete_access_token(keys[index]);
                     let newToken = uuid.v4();
                     var obj = {key: newToken, value: token};
-                    OrchestratorUtils.setTokenToRedis(obj, keys[index]);
-                    OrchestratorUtils.getAccessToken(keys[index]).then((accessToken) => {
-                        OrchestratorUtils.updateAccessToken(accessToken.docs[0].userId,
+                    authentication_fascade.set_token_in_cache(obj, keys[index]);
+                      authentication_fascade.get_access_token(keys[index]).then((accessToken) => {
+                        authentication_fascade.update_access_token(accessToken.docs[0].userId,
                             {userId: accessToken.docs[0].userId, accessToken: newToken});
                     });
                 }
             });
         }
-        responses.sendSuccessResponse(res, {"message": "tokens refreshed sucessfully .."})
-    }).catch(() => {
-            const error = {"message": "refreshing tokens failed"}
-            responses.sendErrorResponse(res, error)
-        });
+       responses.sendSuccessResponse(res,{message:"tokens refresh processed"});
+    });
 }
 
-
-
-function sendUnauthorizedError(req, res) {
+function send_unauthorized_user_error(req, res) {
     const error = {"message": "unauthorized access"}
     req.log.error({message: error});
     res.status(401).json(error)

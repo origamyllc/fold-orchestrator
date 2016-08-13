@@ -13,7 +13,7 @@ import  cookieParser  from 'cookie-parser';
 import  cors  from 'cors';
 import session from 'express-session';
 import { request } from  './../components/request/cut.components.request';
-import { config } from '../config/env/cut.config.dev.js';
+import { settings } from '../../constants/constants.js';
 import { Logger } from './logger/cut.middleware.logger.js';
 import { Secure } from './security/cut.security.passport.js';
 
@@ -24,7 +24,7 @@ const  RedisStore = require('connect-redis')(session);
 
 export const app = express();
 export const router = express.Router();
-const port = config.express.port;
+const port = settings.orchestrator.port;
 
 const ExpressRequest = function (req, res, next) {
     request(req);

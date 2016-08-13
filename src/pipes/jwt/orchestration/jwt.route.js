@@ -1,8 +1,8 @@
 
 import { cutRouter  } from  '../../../cut/index';
-import  * as  JWTController from './jwt.orchestrator.controller';
+import  * as  jwt_conrroller from './jwt.orchestrator.controller';
 
-export const JWTRouter = cutRouter;
+export const jwt_router = cutRouter;
 
-JWTRouter.post('/api/v1/jwttoken/',JWTController.getJWToken);
+jwt_router.post('/api/v1/jwttoken/',jwt_conrroller.get_jwt_token);
 

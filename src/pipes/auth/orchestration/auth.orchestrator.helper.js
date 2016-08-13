@@ -2,7 +2,7 @@
 import  { HTTP } from '../../../cut/index';
 import * as CONSTANTS from '../../../constants/orchestrator.constants';
 
-export function  login( body ,callback) {
+export function  login_user( body ,callback) {
     const  options = {
         host: CONSTANTS.MICROSERVICES_HOST,
         port: CONSTANTS.MICROSERVICES_PORT,
@@ -18,11 +18,11 @@ export function  login( body ,callback) {
     });
 }
 
-export function  getUserByName(name,callback) {
+export function  get_user_by_name(user_name,callback) {
     const options = {
         host: CONSTANTS.MICROSERVICES_HOST,
         port: CONSTANTS.MICROSERVICES_PORT,
-        path: CONSTANTS.USER_PATH + name,
+        path: CONSTANTS.USER_PATH + user_name,
         method: CONSTANTS.GET,
         headers: {
             accept: CONSTANTS.CONTENT_TYPE_JSON,
@@ -35,11 +35,11 @@ export function  getUserByName(name,callback) {
     });
 }
 
-export function getTokenByUserId(userid,callback) {
+export function get_user_token_by_id(user_id,callback) {
     const options = {
         host: CONSTANTS.MICROSERVICES_HOST,
         port: CONSTANTS.MICROSERVICES_PORT,
-        path: CONSTANTS.TOKEN_PATH +'user/' + userid,
+        path: CONSTANTS.TOKEN_PATH +'user/' + user_id,
         method: CONSTANTS.GET ,
         headers: {
             accept: CONSTANTS.CONTENT_TYPE_JSON,
@@ -52,12 +52,12 @@ export function getTokenByUserId(userid,callback) {
     });
 }
 
-export function  getJWTTokenByAccessToken(accesskey,callback) {
+export function  get_jwt_by_access_token(access_key,callback) {
 
     const options = {
         host: CONSTANTS.BACKEND_HOST,
         port: CONSTANTS.BACKEND_PORT ,
-        path: CONSTANTS.REDIS_PATH + accesskey,
+        path: CONSTANTS.REDIS_PATH + access_key,
         method: CONSTANTS.GET,
         headers: {
             accept: CONSTANTS.CONTENT_TYPE_JSON ,
@@ -70,12 +70,12 @@ export function  getJWTTokenByAccessToken(accesskey,callback) {
     });
 }
 
-export function  deleteAccessToken(accesskey,callback) {
+export function  delete_access_token(access_key,callback) {
 
     const options = {
         host: CONSTANTS.BACKEND_HOST,
         port: CONSTANTS.BACKEND_PORT ,
-        path: CONSTANTS.REDIS_PATH + accesskey,
+        path: CONSTANTS.REDIS_PATH + access_key,
         method: CONSTANTS.DELETE,
         headers: {
             accept: CONSTANTS.CONTENT_TYPE_JSON ,
@@ -89,7 +89,7 @@ export function  deleteAccessToken(accesskey,callback) {
 }
 
 
-export function  setTokenToRedis(body,callback) {
+export function  set_token_in_cache(body,callback) {
 
     const options = {
         host: CONSTANTS.BACKEND_HOST,
@@ -108,7 +108,7 @@ export function  setTokenToRedis(body,callback) {
     });
 }
 
-export function  getAccessToken(token,callback) {
+export function  get_access_token(token,callback) {
         const options = {
           host: CONSTANTS.MICROSERVICES_HOST,
             port: CONSTANTS.MICROSERVICES_PORT,
@@ -127,20 +127,18 @@ export function  getAccessToken(token,callback) {
 }
 
 
-export function  updateAccessToken(userId,body,callback) {
+export function  update_access_token(user_id,body,callback) {
 
     const options = {
         host: CONSTANTS.MICROSERVICES_HOST,
         port: CONSTANTS.MICROSERVICES_PORT,
-        path: CONSTANTS.TOKEN_PATH + userId,
+        path: CONSTANTS.TOKEN_PATH + user_id,
         method: CONSTANTS.PUT ,
         headers: {
             accept: CONSTANTS.CONTENT_TYPE_JSON,
             authorization: CONSTANTS.ACCESS_KEY
         }
     };
-
-
 
     HTTP.put(options,body, (result) => {
         return callback(result);

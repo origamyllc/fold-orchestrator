@@ -3,7 +3,6 @@ import  Collections from '../../components/db/mongo/cut.components.db.mongo.mode
 export function isAuthenticated(req,res,next){
 
     const accessToken = req.headers['authorization'];
-
     if(accessToken) {
         Collections['Tokens'].findOne({
             accessToken: accessToken
