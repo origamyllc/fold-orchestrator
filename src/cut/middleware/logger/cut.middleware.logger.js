@@ -23,9 +23,7 @@ function getRequestMetadata(req) {
         os : req.useragent.os,
         platform: req.useragent.platform,
         url:req.url,
-        method: req.method,
-        user: req.user || {},
-        body: req.body
+        method: req.method
     });
 
     return meta;

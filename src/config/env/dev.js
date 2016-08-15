@@ -10,7 +10,7 @@ export  const devConfig = {
         microservices: {
             host: process.env.MICROSERVICES_HOST || 'localhost',
             port: process.env.MICROSERVICES_PORT || 9100,
-            accsesskey: process.env.ACCESS_KEY || '99229561-dd30-4087-9e98-772954747ca4',
+            accsesskey: process.env.ACCESS_KEY || '6d3323f5-e9ec-4717-90ea-b3217cda1333',
             paths: {
                 oauth: process.env.OAUTH_MICROSERVICE_PATH || '/api/oauth2/v1/login',
                 token: process.env.TOKEN_MICROSERVICE_PATH || '/api/v1/tokens/',

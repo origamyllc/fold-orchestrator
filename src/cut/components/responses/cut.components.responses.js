@@ -22,7 +22,7 @@ function getSucessResponse(obj){
     }
 }
 
-export function sendResponse(res,obj ){
+export function send_response(res,obj ){
     if(obj.response) {
         delete obj.response.message;
         res.json(obj.response);
@@ -63,3 +63,8 @@ export function sendErrorResponse(res ,obj){
 
 }
 
+export function send_unauthorized_user_error(req, res) {
+    const error = {"message": "unauthorized access"}
+    req.log.error({message: error});
+    res.status(401).json(error)
+}
