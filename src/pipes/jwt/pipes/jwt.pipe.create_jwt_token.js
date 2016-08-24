@@ -20,12 +20,13 @@ const initialize_pipe = function (req,res) {
                     }
                     else{
                         req.log.error("can not create  JWT token ");
-                        responses.send_response(res ,{ error:'can not create  JWT token' });
+                        // TODO : use standard error and return 404 resource not found
+                        responses.sendErrorResponse(res ,{ message:'JWT Not created' });
                     }
                 }).catch(() => {
-
                     req.log.error("can not create  JWT token ");
-                    responses.send_response(res ,{ error:'can not create  JWT token' });
+                    // TODO : use standard error and return 404 resource not found
+                    responses.sendErrorResponse(res ,{ message:'JWT Not created' });
                 });
             });
 }

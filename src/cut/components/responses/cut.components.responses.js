@@ -5,7 +5,6 @@ import { logger } from '../../middleware/logger/cut.middleware.bunyan';
 import * as errors from '../../errors/cut.components.errors.customErrors';
 import Promise from 'bluebird';
 
-
 function getSucessMessage(obj){
     if(! obj.hasOwnProperty('message')){
         return 'HTTP OK!';
@@ -33,18 +32,24 @@ export function send_response(res,obj ){
 }
 
 
- function  sendError(obj){
-    let error = errors.InternalServerError({
-        message:obj.message ,
-        errorCode:obj.errorCode ,
-        type:obj.type,
-        details: obj.details
-    });
 
-    new Promise( (resolve) => {
+function  sendError(obj){
+    let error = null;
+
+    if(obj.error === 'Resource Not Found'){
+        error = errors.ResourceDoesNotExist({ message:"Resource Not Found" });
+    } else {
+        error = errors.InternalServerError({
+            message:obj.message ,
+            errorCode:obj.errorCode ,
+            type:obj.type,
+            details: obj.details
+        });
+    }
+
+   return  new Promise( (resolve) => {
         resolve( error );
     });
-
 
 }
 
@@ -56,8 +61,15 @@ export function sendSuccessResponse(res ,obj){
 }
 
 export function sendErrorResponse(res ,obj){
+
     sendError(obj).then((error) => {
-        res.status(500).json(error)
+       if(obj.error === 'Resource Not Found'){
+           res.status(404).json(error)
+       }
+        else{
+           res.status(500).json(error)
+       }
+
         return null;
     });
 

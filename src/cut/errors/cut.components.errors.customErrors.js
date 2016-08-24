@@ -19,3 +19,14 @@ export function MongooseModelDoesNotExist(){
     };
     return createCustomError( settings , MongooseModelDoesNotExist ) ;
 }
+
+
+export function ResourceDoesNotExist(){
+    let settings = {
+        status : 404,
+        errorCode :  2200,
+        message : "Resource does not exist",
+        type : "Resource misssing "
+    };
+    return createCustomError( settings , ResourceDoesNotExist ) ;
+}
