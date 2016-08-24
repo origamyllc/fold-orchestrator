@@ -4,14 +4,14 @@ import { responses,LRU } from '../../../cut/index';
 import * as orchestrator_fascade from '../orchestrator/jwt.orchestrator.fascade';
 const  jwt = require('jsonwebtoken');
 
-export function get_jwt_token_by_user(req,res){
+export function create_jwt_token(req,res){
     initialize_pipe.call(initialize_pipe,req,res);
 }
 
 const initialize_pipe = function (req,res) {
     req.log.info("creating JWT  token for user");
     const access_key = req.headers.authorization ;
-        create_jwt_token (req,res)
+    create_jwt_token_from_access_token (req,res)
             .then(( jwt_token ) => {
                 save_token(req, access_key ,jwt_token).then((isSaved) => {
                     if(isSaved){
@@ -23,13 +23,14 @@ const initialize_pipe = function (req,res) {
                         responses.send_response(res ,{ error:'can not create  JWT token' });
                     }
                 }).catch(() => {
+
                     req.log.error("can not create  JWT token ");
                     responses.send_response(res ,{ error:'can not create  JWT token' });
                 });
             });
 }
 
-function create_jwt_token (req,res){
+function create_jwt_token_from_access_token (req,res){
     return  new Promise( (resolve) => {
         resolve(get_user_by_name(req, res ));
     });
@@ -48,7 +49,6 @@ function get_user_by_name(req, res) {
             resolve(get_role_by_user_name(req, res, jwt_object));
         }).catch(() => {
             req.log.error("can not get user by user name ")
-            responses.send_unauthorized_user_error(req, res);
         });
     });
 }
@@ -60,8 +60,7 @@ function get_role_by_user_name(req, res, jwt_object) {
             jwt_object.claimsId = role.docs[0].claims;
             resolve(jwt.sign(jwt_object,'hhhhhh'));
         }).catch(() => {
-            req.log.error("can not get role by user name ")
-            responses.send_unauthorized_user_error(req, res);
+            req.log.error("can not get role by user name ");
         });
     });
 }
