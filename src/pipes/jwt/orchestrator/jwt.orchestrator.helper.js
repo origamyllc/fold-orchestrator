@@ -55,12 +55,12 @@ export function  get_user_by_name(user_name,callback) {
  * @param body
  * @param callback
  */
-export function  get_role_by_user_name(user_name,callback) {
+export function  get_role_by_role_name(role_name,callback) {
 
     const options = {
         host: CONSTANTS.MICROSERVICES_HOST,
         port: CONSTANTS.MICROSERVICES_PORT,
-        path: CONSTANTS.ROLE_PATH + user_name,
+        path: CONSTANTS.ROLE_PATH + role_name,
         method: CONSTANTS.GET,
         headers: {
             accept: CONSTANTS.CONTENT_TYPE_JSON ,

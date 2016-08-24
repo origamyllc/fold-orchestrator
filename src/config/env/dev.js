@@ -4,7 +4,7 @@ export  const devConfig = {
             host: process.env.ORCHESTRATOR_HOST || 'localhost',
             port: process.env.ORCHESTRATOR_PORT || 9200,
             paths: {
-                authenticate: '/api/v1/authenticate'
+                authenticate: '/api/v1/accesstoken'
             }
         },
         microservices: {

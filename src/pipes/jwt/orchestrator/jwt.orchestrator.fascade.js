@@ -19,9 +19,9 @@ export function get_user_by_name(user_name) {
 }
 
 
-export function get_role_by_user_name (user_name) {
+export function get_role_by_role_name (role_name) {
     return new Promise((resolve) => {
-        jwt_token_helper.get_role_by_user_name(user_name,(result) => {
+        jwt_token_helper.get_role_by_role_name(role_name,(result) => {
             resolve(result);
         });
     });
