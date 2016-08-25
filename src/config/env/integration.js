@@ -18,7 +18,8 @@ export  const integrationConfig = {
             oauth:process.env.OAUTH_MICROSERVICE_PATH || '/api/oauth2/v1/login',
             token:process.env.TOKEN_MICROSERVICE_PATH || '/api/v1/tokens/',
             user:process.env.USER_MICROSERVICE_PATH   || '/api/v1/user/username/',
-            role:process.env.ROLE_MICROSERVICE_PATH   || '/api/v1/roles/name/'
+            role:process.env.ROLE_MICROSERVICE_PATH   || '/api/v1/roles/name/',
+            claim: process.env.ROLE_MICROSERVICE_PATH || '/api/v1/claims/'
         }
     },
     backend:{

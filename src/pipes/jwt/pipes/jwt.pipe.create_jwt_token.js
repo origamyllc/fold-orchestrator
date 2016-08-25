@@ -20,13 +20,11 @@ const initialize_pipe = function (req,res) {
                     }
                     else{
                         req.log.error("can not create  JWT token ");
-                        // TODO : use standard error and return 404 resource not found
-                        responses.sendErrorResponse(res ,{ message:'JWT Not created' });
+                        responses.sendErrorResponse(res ,{ message:'JWT Not created' ,details:"JWT Token already exists for the given access token "});
                     }
                 }).catch(() => {
                     req.log.error("can not create  JWT token ");
-                    // TODO : use standard error and return 404 resource not found
-                    responses.sendErrorResponse(res ,{ message:'JWT Not created' });
+                    responses.sendErrorResponse(res ,{ message:'JWT Not created',details:"JWT Token already exists for the given access token " });
                 });
             });
 }
@@ -49,7 +47,8 @@ function get_user_by_name(req, res) {
             }
             resolve(get_role_by_user_name(req, res, jwt_object));
         }).catch(() => {
-            req.log.error("can not get user by user name ")
+            req.log.error("can not get user by user name ");
+            responses.send_unauthorized_user_error(req, res);
         });
     });
 }
@@ -62,24 +61,34 @@ function get_role_by_user_name(req, res, jwt_object) {
             resolve(jwt.sign(jwt_object,'hhhhhh'));
         }).catch(() => {
             req.log.error("can not get role by user name ");
+            responses.send_unauthorized_user_error(req, res);
         });
     });
 }
 
 function save_token(req, access_key ,jwt_token){
     return new Promise((resolve,reject) => {
-        orchestrator_fascade.get_jwt_token_by_access_token(access_key).then((jwt_token) => {
-             // do nothing
-            req.log.info("token already exists");
-            resolve(false);
+        orchestrator_fascade.get_jwt_token_by_access_token(access_key).then((result) => {
+            if(result.status === 500){
+                setKey(access_key,jwt_token)
+            }
+            else {
+                req.log.info("token already exists");
+                resolve(false);
+            }
         }).catch((err) => {
-            var obj = { key: access_key, value :"Bearer "+ jwt_token };
-            orchestrator_fascade.set_token_in_cache(obj).then((result) => {
-                resolve(true);
-            }).catch((err) => {
-                reject(false);
-            });
+            setKey(access_key,jwt_token)
         });
     });
 }
 
+function setKey(access_key,jwt_token){
+    return new Promise((resolve,reject) => {
+        var obj = { key: access_key, value :"Bearer "+ jwt_token };
+        orchestrator_fascade.set_token_in_cache(obj).then((result) => {
+            resolve(true);
+        }).catch((err) => {
+           reject(false);
+        });
+    });
+}

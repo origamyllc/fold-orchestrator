@@ -107,7 +107,7 @@ export function  set_token_in_cache(body,callback) {
         headers: {
             'Content-Type': CONSTANTS.CONTENT_TYPE_XML,
             'Content-Length':JSON.stringify(body).length,
-             authorization:CONSTANTS.ACCESS_KEY
+            authorization:CONSTANTS.ACCESS_KEY
         }
     };
 
@@ -115,5 +115,21 @@ export function  set_token_in_cache(body,callback) {
         return callback(result);
     });
 
+}
 
+export function  get_claims_by_id(claim_id,callback) {
+    const options = {
+        host: CONSTANTS.MICROSERVICES_HOST,
+        port: CONSTANTS.MICROSERVICES_PORT ,
+        path: CONSTANTS.CLAIM_PATH + claim_id,
+        method: CONSTANTS.GET,
+        headers: {
+            accept: CONSTANTS.CONTENT_TYPE_JSON ,
+            authorization:CONSTANTS.ACCESS_KEY
+        }
+    };
+
+    HTTP.get(options ,(result) => {
+        return callback(result);
+    });
 }

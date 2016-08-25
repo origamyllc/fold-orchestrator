@@ -41,5 +41,13 @@ export function  set_token_in_cache(body){
             resolve(result);
         });
     });
-
 }
+
+export function  get_claims_by_id(claim_id){
+    return new Promise((resolve) => {
+        jwt_token_helper.get_claims_by_id(claim_id,(result) => {
+            resolve(result);
+        });
+    });
+}
+

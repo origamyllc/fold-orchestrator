@@ -41,6 +41,7 @@ export const OAUTH_PATH = config.microservices.paths.oauth;
 export const USER_PATH =  config.microservices.paths.user;
 export const TOKEN_PATH = config.microservices.paths.token;
 export const ROLE_PATH = config.microservices.paths.role;
+export const CLAIM_PATH = config.microservices.paths.claim;
 
 export const LRU_OPTIONS = config.lru.options;
 export const AUHTENTICATION_PATH = config.orchestrator.paths.authenticate;
