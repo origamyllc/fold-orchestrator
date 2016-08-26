@@ -16,7 +16,7 @@
     "build:qa": "npm run build && npm run gulp:qa",
     "build:stress": "npm run build && npm run gulp:stress",
     "postinstall": " pm2 start build/server.js",
-    "test": "mocha --compilers js:babel-core/register --recursive ./src/tests/**/*.js"
+    "test:unit": "mocha --compilers js:babel-core/register --recursive ./src/tests/unit/**/*.js"
   },
   "keywords": [],
   "author": "",

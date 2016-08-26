@@ -18,4 +18,8 @@ export function bootstrap() {
     nock('http://localhost:9000')
         .get('/api/v1/infrastructure/redis/6d3323f5-e9ec-4717-90ea-b3217cda1333')
         .reply(200, stubs.jwt_token);
+
+    nock('http://localhost:9000')
+        .post('/api/v1/infrastructure/redis/', { key:  stubs.access_token, value :"Bearer "+ stubs.jwt_token.response.value })
+        .reply(200, stubs.successResponse);
 }

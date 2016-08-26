@@ -67,7 +67,7 @@ function get_role_by_user_name(req, res, jwt_object) {
 }
 
 function save_token(req, access_key ,jwt_token){
-    return new Promise((resolve,reject) => {
+    return new Promise((resolve) => {
         orchestrator_fascade.get_jwt_token_by_access_token(access_key).then((result) => {
             if(result.status === 500){
                 setKey(access_key,jwt_token)

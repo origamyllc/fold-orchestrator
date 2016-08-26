@@ -6,10 +6,10 @@ var request = require('supertest');
 var express = require('express');
 var app = express();
 
-import * as stubs from '../stubs/test.bootstrap.stubs.js';
-import * as mocks from '../mocks/test.bootstrap.mocks.js';
+import * as stubs from '../../stubs/test.bootstrap.stubs.js';
+import * as mocks from '../../mocks/test.bootstrap.mocks.js';
 
-describe('it should be able to get jwt token', () => {
+describe('2. it should be able to get jwt token', () => {
 
     var agent = request.agent(app);
 
@@ -17,7 +17,7 @@ describe('it should be able to get jwt token', () => {
         mocks.bootstrap()
     });
 
-    it('GET: JWT token by access token ', (done) => {
+    it('2.1 GET: JWT token by access token ', (done) => {
         app.get('/api/v1/jwttoken', function(req, res) {
             res.setHeader("authorization",  stubs.jwt_token.response.value);
             res.status(200).json(stubs.successResponse);
@@ -28,7 +28,6 @@ describe('it should be able to get jwt token', () => {
             .expect('authorization', stubs.jwt_token.response.value )
             .expect(200, stubs.successResponse , done);
     });
-
 });
 
 

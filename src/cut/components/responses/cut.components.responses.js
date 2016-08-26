@@ -69,7 +69,6 @@ export function sendErrorResponse(res ,obj){
         else{
            res.status(500).json(error)
        }
-
         return null;
     });
 
@@ -77,6 +76,6 @@ export function sendErrorResponse(res ,obj){
 
 export function send_unauthorized_user_error(req, res) {
     const error = {"message": "unauthorized access"}
-    req.log.error({message: error});
+    req.log.error(error);
     res.status(401).json(error)
 }

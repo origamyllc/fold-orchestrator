@@ -21,23 +21,26 @@ const initialize_pipe = function (req,res) {
                 type:err.name
             });
         }
+        get_claims_by_id(req,res,token);
+    });
+}
 
-        orchestrator_fascade.get_claims_by_id(decoded_token.claimsId).then((claim) => {
+function get_claims_by_id(req,res,token){
+    orchestrator_fascade.get_claims_by_id(token.claimsId).then((claim) => {
 
-            let permissions = {};
+        let permissions = {};
 
-            delete decoded_token.claimsId;
-            permissions.devices = claim.docs[0]["devices"];
-            permissions.api_white_list = claim.docs[0]["api_white_list"];
-            permissions.applications = claim.docs[0]["applications"];
+        delete token.claimsId;
+        permissions.devices = claim.docs[0]["devices"];
+        permissions.api_white_list = claim.docs[0]["api_white_list"];
+        permissions.applications = claim.docs[0]["applications"];
 
-            decoded_token.permissions =  permissions;
+        token.permissions =  permissions;
 
-            res.setHeader("x-authorization-header","Bearer " + jwt.sign( decoded_token,'hhhhhh'));
-            responses.sendSuccessResponse(res, {"message": "authorized"});
-        }).catch(() => {
-            req.log.error("JWT token verification failed no claims exist");
-            responses.sendErrorResponse(res ,{ message:'JWT token verification failed no claims exist',details:"JWT verification failed" });
-        });
+        res.setHeader("x-authorization-header","Bearer " + jwt.sign( token,'hhhhhh'));
+        responses.sendSuccessResponse(res, {"message": "authorized"});
+    }).catch(() => {
+        req.log.error("JWT token verification failed no claims exist");
+        responses.sendErrorResponse(res ,{ message:'JWT token verification failed no claims exist',details:"JWT verification failed" });
     });
 }
