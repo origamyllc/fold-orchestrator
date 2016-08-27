@@ -9,7 +9,7 @@ var app = express();
 import * as stubs from '../../stubs/test.bootstrap.stubs.js';
 import * as mocks from '../../mocks/test.bootstrap.mocks.js';
 
-describe('2. it should be able to get jwt token', () => {
+describe('3. it should be able to get jwt token', () => {
 
     var agent = request.agent(app);
 
@@ -17,7 +17,7 @@ describe('2. it should be able to get jwt token', () => {
         mocks.bootstrap()
     });
 
-    it('2.1 GET: JWT token by access token ', (done) => {
+    it('3.1 should get JWT token by access token ', (done) => {
         app.get('/api/v1/jwttoken', function(req, res) {
             res.setHeader("authorization",  stubs.jwt_token.response.value);
             res.status(200).json(stubs.successResponse);

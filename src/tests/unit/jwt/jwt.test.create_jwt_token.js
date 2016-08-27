@@ -9,20 +9,19 @@ const request = require('supertest');
 const express = require('express');
 const app = express();
 const expect = require('chai').expect;
-const LRUCache = require('lru-cache');
-const LRU = LRUCache(1000);
+
 
 var agent = request.agent(app);
 var m_agent = request.agent("http://localhost:9100");
 var b_agent = request.agent("http://localhost:9000");
 
-describe('1. POST : username and password to get JWT token ', (done) => {
+describe('1. should  create JWT token when username and password is posted  ', (done) => {
 
     before( function(){
         mocks.bootstrap()
     });
 
-    it('1.1 GET: user info by username', (done) => {
+    it('1.1 should get  user info by username', (done) => {
         m_agent
             .get('/api/v1/user/username/bart')
             .end(function (err, res) {
@@ -33,7 +32,7 @@ describe('1. POST : username and password to get JWT token ', (done) => {
             });
     });
 
-    it('1.2 GET: role info  by role name ', (done) => {
+    it('1.2 should get role info  by role name ', (done) => {
         m_agent
             .get('/api/v1/roles/name/catalog.admin')
             .end(function (err, res) {
@@ -47,7 +46,7 @@ describe('1. POST : username and password to get JWT token ', (done) => {
 
     describe('1.3 should save the jwt token    ', () => {
 
-        it('1.3.1 GET : jwt token by accesss token from redis  ', (done) => {
+        it('1.3.1 should get jwt token by access token from redis  ', (done) => {
             b_agent
                 .get('/api/v1/infrastructure/redis/6d3323f5-e9ec-4717-90ea-b3217cda1333')
                 .end( (err, res) =>  {
@@ -70,6 +69,32 @@ describe('1. POST : username and password to get JWT token ', (done) => {
                     done()
                 });
         });
+
+        it('1.3.3 should set the jwt token as header and return the response', (done) => {
+            app.post("/api/v1/jwttoken", function(req, res){
+                expect(req.headers.authorization).to.equal(stubs.access_token);
+                res.setHeader("authorization",  stubs.jwt_token.response.value);
+                res.status(200).send( stubs.successResponse)
+
+            });
+
+           const user = {
+                username:'bart',
+                password:'bartmargeisTheSon'
+            };
+
+            agent.post("/api/v1/jwttoken")
+                .set('Authorization', stubs.access_token)
+                .send(user)
+                .end(function(err, res) {
+                    expect(res.headers.authorization).to.equal(stubs.jwt_token.response.value);
+                    expect(res.status).to.equal(200);
+                    expect(res.text).to.equal(JSON.stringify(stubs.successResponse));
+                    done();
+                });
+
+        });
+
     });
 
 });
