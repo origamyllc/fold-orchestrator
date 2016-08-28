@@ -3,7 +3,7 @@
  */
 "use strict";
 
-import { responses,LRU } from '../../../cut/index';
+import { responses } from '../../../cut/index';
 import * as orchestrator_fascade from '../orchestrator/jwt.orchestrator.fascade';
 const  jwt = require('jsonwebtoken');
 

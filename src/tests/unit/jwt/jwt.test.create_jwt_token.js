@@ -78,30 +78,30 @@ describe('1. should  create JWT token when username and password is posted  ', (
                 });
         });
 
-        it('1.3.3 should set the jwt token as header and return the response', (done) => {
-            app.post("/api/v1/jwttoken", function(req, res){
-                expect(req.headers.authorization).to.equal(stubs.access_token);
-                res.setHeader("authorization",  stubs.jwt_token.response.value);
-                res.status(200).send( stubs.successResponse)
+    });
 
-            });
-
-           const user = {
-                username:'bart',
-                password:'bartmargeisTheSon'
-            };
-
-            agent.post("/api/v1/jwttoken")
-                .set('Authorization', stubs.access_token)
-                .send(user)
-                .end(function(err, res) {
-                    expect(res.headers.authorization).to.equal(stubs.jwt_token.response.value);
-                    expect(res.status).to.equal(200);
-                    expect(res.text).to.equal(JSON.stringify(stubs.successResponse));
-                    done();
-                });
+    it('1.3.3 should set the jwt token as header and return the response', (done) => {
+        app.post("/api/v1/jwttoken", function(req, res){
+            expect(req.headers.authorization).to.equal(stubs.access_token);
+            res.setHeader("authorization",  stubs.jwt_token.response.value);
+            res.status(200).send( stubs.successResponse)
 
         });
+
+        const user = {
+            username:'bart',
+            password:'bartmargeisTheSon'
+        };
+
+        agent.post("/api/v1/jwttoken")
+            .set('Authorization', stubs.access_token)
+            .send(user)
+            .end(function(err, res) {
+                expect(res.headers.authorization).to.equal(stubs.jwt_token.response.value);
+                expect(res.status).to.equal(200);
+                expect(res.text).to.equal(JSON.stringify(stubs.successResponse));
+                done();
+            });
 
     });
 

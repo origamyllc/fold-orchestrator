@@ -55,5 +55,13 @@ app.use(ExpressRequest);
 
 Secure(app);
 
-const  server = http.createServer(app).listen( port);
+let server = http.createServer(app);
+     server.listen( port );
 
+export const listen = function () {
+    server.listen.apply(server, arguments);
+};
+
+export const close = function (callback) {
+     server.close(callback);
+};

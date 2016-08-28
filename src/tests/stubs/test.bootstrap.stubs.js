@@ -3,11 +3,16 @@
  */
 
 export const  user_stub = {
-    _id:'57aec655adeceec90f543e0f',
-    username:'bart',
-    password:'bartmargeisTheSon',
-    email:'bart@cut.com',
-    roles:['catalog.admin']
+    docs:
+    [ { _id: '57aec655adeceec90f543e10',
+        updated_at: '2016-08-13T07:03:49.760Z',
+        created_at: '2016-08-13T07:03:49.760Z',
+        username: 'bart',
+        hashedPassword: 'Q9gyYkboM5yBTcZRS2/OYEBQ+qZEbFJ2skeJW/nk1AaixFGcZ4HxqF/782zpRHfGrW1l7RzxsSBlobzynD+oPQ==',
+        __v: 0,
+        salt: 'aQpNcjg+IeWS8b/mzMJXBQ==',
+        roles:['catalog.admin'],
+        email: 'bart@cut.com' } ]
 };
 
 export const jwt_object = {
@@ -17,10 +22,13 @@ export const jwt_object = {
 }
 
 export const role_stub  = {
-    name: 'catalog.admin',
-    description: 'can administer the catalog',
-    claims: 'ghafdgsfdgahvh6433517683485'
-}
+    "docs":[ {"_id":"57aec663adeceec90f543e19",
+        "updated_at":"2016-08-13T07:04:06.396Z",
+        "created_at":"2016-08-13T07:04:06.396Z",
+        "name":"catalog.admin",
+        "description":"can administer the catalog",
+        "claims":"57aec655adeceec90f543e13","__v":0}]
+ }
 
 export const claims_stub  = {
     name:'catalog.admin.claims',

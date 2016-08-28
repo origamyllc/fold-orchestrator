@@ -1,6 +1,6 @@
 "use strict";
 
-import { responses,LRU,log } from '../../../cut/index';
+import { responses,log } from '../../../cut/index';
 import * as orchestrator_fascade from '../orchestrator/jwt.orchestrator.fascade';
 const  jwt = require('jsonwebtoken');
 
@@ -13,20 +13,38 @@ const initialize_pipe  = function  (req,res){
             .then( get_role_by_name )
             .then( (jwt_token) => {
                      const access_key = req.headers.authorization ;
-                    save_token(access_key ,jwt_token).then((isSaved) => {
-                        if(isSaved){
-                            res.setHeader("authorization",  jwt_token.response.value);
-                            responses.sendSuccessResponse(res, {"message": "authorized"});
-                        }
-                        else{
-                            req.log.error("can not create  JWT token ");
-                            responses.sendErrorResponse(res ,{ message:'JWT Not created' ,details:"JWT Token already exists for the given access token "});
-                        }
-                    }).catch(() => {
-                        req.log.error("can not create  JWT token ");
-                        responses.sendErrorResponse(res ,{ message:'JWT Not created',details:"JWT Token already exists for the given access token " });
-                    });
+                     if(access_key && access_key !== '') {
+                         handleResponse ( access_key, jwt_token , req, res);
+                     }
+                     else {
+                         responses.sendErrorResponse(res, {
+                             message: 'JWT Not created',
+                             details: "access token empty or null "
+                         });
+                     }
                 });
+}
+
+function handleResponse (access_key, jwt_token , req, res){
+    save_token(access_key, jwt_token).then((isSaved) => {
+        if (isSaved) {
+            res.setHeader("authorization", jwt_token.response.value);
+            responses.sendSuccessResponse(res, {"message": "authorized"});
+        }
+        else {
+            req.log.error("can not create  JWT token ");
+            responses.sendErrorResponse(res, {
+                message: 'JWT Not created',
+                details: "JWT Token already exists for the given access token "
+            });
+        }
+    }).catch(() => {
+        req.log.error("can not create  JWT token ");
+        responses.sendErrorResponse(res, {
+            message: 'JWT Not created',
+            details: "JWT Token already exists for the given access token "
+        });
+    });
 }
 
 function get_user_info_by_name(req) {
