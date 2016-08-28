@@ -1,6 +1,6 @@
 "use strict";
 
-import { responses,LRU } from '../../../cut/index';
+import { responses,LRU,log } from '../../../cut/index';
 import * as orchestrator_fascade from '../orchestrator/jwt.orchestrator.fascade';
 const  jwt = require('jsonwebtoken');
 
@@ -8,75 +8,69 @@ export function create_jwt_token(req,res){
     initialize_pipe.call(initialize_pipe,req,res);
 }
 
-const initialize_pipe = function (req,res) {
-    req.log.info("creating JWT  token for user");
-    const access_key = req.headers.authorization ;
-    create_jwt_token_from_access_token (req,res)
-            .then(( jwt_token ) => {
-                save_token(req, access_key ,jwt_token).then((isSaved) => {
-                    if(isSaved){
-                        res.setHeader("authorization",  jwt_token.response.value);
-                        responses.sendSuccessResponse(res, {"message": "authorized"});
-                    }
-                    else{
+const initialize_pipe  = function  (req,res){
+             get_user_info_by_name(req, res )
+            .then( get_role_by_name )
+            .then( (jwt_token) => {
+                     const access_key = req.headers.authorization ;
+                    save_token(access_key ,jwt_token).then((isSaved) => {
+                        if(isSaved){
+                            res.setHeader("authorization",  jwt_token.response.value);
+                            responses.sendSuccessResponse(res, {"message": "authorized"});
+                        }
+                        else{
+                            req.log.error("can not create  JWT token ");
+                            responses.sendErrorResponse(res ,{ message:'JWT Not created' ,details:"JWT Token already exists for the given access token "});
+                        }
+                    }).catch(() => {
                         req.log.error("can not create  JWT token ");
-                        responses.sendErrorResponse(res ,{ message:'JWT Not created' ,details:"JWT Token already exists for the given access token "});
-                    }
-                }).catch(() => {
-                    req.log.error("can not create  JWT token ");
-                    responses.sendErrorResponse(res ,{ message:'JWT Not created',details:"JWT Token already exists for the given access token " });
+                        responses.sendErrorResponse(res ,{ message:'JWT Not created',details:"JWT Token already exists for the given access token " });
+                    });
                 });
-            });
 }
 
-function create_jwt_token_from_access_token (req,res){
-    return  new Promise( (resolve) => {
-        resolve(get_user_by_name(req, res ));
-    });
-}
-
-function get_user_by_name(req, res) {
+function get_user_info_by_name(req) {
     return  new Promise( (resolve) => {
         let jwt_object = {};
-        req.log.info( "getting  user for username " + req.body.username);
+        log.info( " Getting  user info for user:: " + JSON.stringify( req.body ));
         orchestrator_fascade.get_user_by_name(req.body.username).then((user) => {
+           log.info( "Got user info::" + JSON.stringify(user) );
             if (user) {
                 jwt_object.userId = user.docs[0]._id;
                 jwt_object.username = user.docs[0].username;
                 jwt_object.roles = user.docs[0].roles;
             }
-            resolve(get_role_by_user_name(req, res, jwt_object));
+            resolve(jwt_object);
         }).catch(() => {
-            req.log.error("can not get user by user name ");
-            responses.send_unauthorized_user_error(req, res);
+            log.error("Can not get user by user name ");
         });
     });
 }
 
-function get_role_by_user_name(req, res, jwt_object) {
+const get_role_by_name = function (jwt_object) {
     return  new Promise( (resolve) => {
-        req.log.info(" getting role info  by role ");
+        log.info(" Getting role info by name::"+ jwt_object.roles );
         orchestrator_fascade.get_role_by_role_name(jwt_object.roles).then((role) => {
+            log.info( "Got role info::" + JSON.stringify(role) );
             jwt_object.claimsId = role.docs[0].claims;
             resolve(jwt.sign(jwt_object,'hhhhhh'));
         }).catch(() => {
-            req.log.error("can not get role by user name ");
-            responses.send_unauthorized_user_error(req, res);
+            log.error("Can not get role by user name::" +  jwt_object.username );
         });
     });
 }
 
-function save_token(req, access_key ,jwt_token){
+function save_token(access_key ,jwt_token){
     return new Promise((resolve) => {
         orchestrator_fascade.get_jwt_token_by_access_token(access_key).then((result) => {
             if(result.status === 500){
                 setKey(access_key,jwt_token)
             }
             else {
-                req.log.info("token already exists");
+                log.error("Token already exists");
                 resolve(false);
             }
-        }).catch((err) => {
+        }).catch(() => {
             setKey(access_key,jwt_token)
         });
     });
@@ -85,7 +79,8 @@ function save_token(req, access_key ,jwt_token){
 function setKey(access_key,jwt_token){
     return new Promise((resolve,reject) => {
         var obj = { key: access_key, value :"Bearer "+ jwt_token };
-        orchestrator_fascade.set_token_in_cache(obj).then((result) => {
+        log.info(" Setting jwt token as key for access token "+ access_key );
+        orchestrator_fascade.set_token_in_cache(obj).then(() => {
             resolve(true);
         }).catch((err) => {
            reject(false);

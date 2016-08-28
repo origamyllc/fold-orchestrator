@@ -3,12 +3,18 @@
  */
 
 export const  user_stub = {
+    _id:'57aec655adeceec90f543e0f',
     username:'bart',
     password:'bartmargeisTheSon',
     email:'bart@cut.com',
     roles:['catalog.admin']
 };
 
+export const jwt_object = {
+    userId: '57aec655adeceec90f543e0f',
+    username: 'bart',
+    roles: [ 'catalog.admin' ]
+}
 
 export const role_stub  = {
     name: 'catalog.admin',
@@ -31,7 +37,7 @@ export const claims_stub  = {
 
 export const jwt_token = {
     response: {
-        value: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1N2FlYzY1NWFkZWNlZWM5MGY1NDNlMGYiLCJ1c2VybmFtZSI6Im1hcmdlIiwicm9sZXMiOlsiY2F0YWxvZy5hZG1pbiJdLCJjbGFpbXNJZCI6IjU3YWVjNjU1YWRlY2VlYzkwZjU0M2UxMyIsImlhdCI6MTQ3MjEwNDM4MH0.qJjSi46JyJ6NjaKpVi18jg1RH5BL7XfsdyulEobyZdg'
+        value:  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1N2FlYzY1NWFkZWNlZWM5MGY1NDNlMGYiLCJ1c2VybmFtZSI6Im1hcmdlIiwicm9sZXMiOlsiY2F0YWxvZy5hZG1pbiJdLCJjbGFpbXNJZCI6IjU3YWVjNjU1YWRlY2VlYzkwZjU0M2UxMyIsImlhdCI6MTQ3MjEwNDM4MH0.qJjSi46JyJ6NjaKpVi18jg1RH5BL7XfsdyulEobyZdg'
     },
     status:200
 };

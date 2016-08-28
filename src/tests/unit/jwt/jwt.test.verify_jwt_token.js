@@ -7,6 +7,7 @@ var express = require('express');
 var app = express();
 const  jwt = require('jsonwebtoken');
 const expect = require('chai').expect;
+const uuid = require('node-uuid');
 
 import * as stubs from '../../stubs/test.bootstrap.stubs.js';
 import * as mocks from '../../mocks/test.bootstrap.mocks.js';
@@ -16,8 +17,7 @@ var agent = request.agent(app);
 
 describe('4. it should be able to verify jwt token', () => {
     before( function(){
-        mocks.bootstrap()
-
+        mocks.bootstrap();
     });
 
     it('4.1 should verify JWT token ', (done) => {

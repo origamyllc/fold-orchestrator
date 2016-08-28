@@ -24,6 +24,18 @@ export function bootstrap() {
         .reply(200, stubs.jwt_token);
 
     nock('http://localhost:9000')
-        .post('/api/v1/infrastructure/redis/', { key:  stubs.access_token, value :"Bearer "+ stubs.jwt_token.response.value })
+        .post('/api/v1/infrastructure/redis/', {
+            key: stubs.access_token,
+            value: "Bearer " + stubs.jwt_token.response.value
+        })
         .reply(200, stubs.successResponse);
+
+    nock('http://localhost:9100')
+        .post('/api/oauth2/v1/login', {username: 'bart', password: 'bartmargeisTheSon'})
+        .reply(200, {username: 'bart', password: 'bartmargeisTheSon'});
+
+    nock('http://localhost:9100')
+        .get('/api/v1/token/57aec655adeceec90f543e0f')
+        .reply(200, { accestoken : stubs.access_token });
 }
+

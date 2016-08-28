@@ -9,7 +9,7 @@ export function get_access_token_by_user(req, res) {
 const initialize_pipe = function (req,res) {
     return new Promise(() => {
         req.log.info( "login in user " + req.body.username);
-        authentication_fascade.login_user(req).then(function (user) {
+        authentication_fascade.login_user(req).then( (user) =>  {
             get_user_by_name(req,res,JSON.parse(user)["username"])
         }).catch(() => {
             req.log.error("login in user " + req.body.username + "failed !");

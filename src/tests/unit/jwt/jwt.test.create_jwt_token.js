@@ -9,11 +9,12 @@ const request = require('supertest');
 const express = require('express');
 const app = express();
 const expect = require('chai').expect;
-
+const  jwt = require('jsonwebtoken');
 
 var agent = request.agent(app);
 var m_agent = request.agent("http://localhost:9100");
 var b_agent = request.agent("http://localhost:9000");
+
 
 describe('1. should  create JWT token when username and password is posted  ', (done) => {
 
@@ -25,8 +26,15 @@ describe('1. should  create JWT token when username and password is posted  ', (
         m_agent
             .get('/api/v1/user/username/bart')
             .end(function (err, res) {
-                expect(res.status).to.equal(200);
-                expect(res.text).to.equal(JSON.stringify(stubs.user_stub));
+                let user_info = JSON.parse(res.text);
+                let jwt_object = {};
+                expect(JSON.stringify(user_info)).to.equal(JSON.stringify(stubs.user_stub));
+                if (user_info) {
+                    jwt_object.userId = user_info._id;
+                    jwt_object.username = user_info.username;
+                    jwt_object.roles = user_info.roles;
+                }
+                expect(JSON.stringify(jwt_object)).to.equal(JSON.stringify(stubs.jwt_object));
                 if (err) return done(err)
                 done()
             });
@@ -64,7 +72,7 @@ describe('1. should  create JWT token when username and password is posted  ', (
                 .send(obj)
                 .end( (err, res) =>  {
                     expect(res.status).to.equal(200);
-                    expect(stubs.successResponse).to.equal(stubs.successResponse);
+                    expect(res.text).to.equal(JSON.stringify(stubs.successResponse));
                     if (err) return done(err)
                     done()
                 });
