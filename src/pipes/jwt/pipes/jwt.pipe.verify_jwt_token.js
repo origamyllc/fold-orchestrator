@@ -22,7 +22,7 @@ const initialize_pipe = function (req,res) {
                 type:err.name
             });
         }
-        get_claims_by_id(req,res,token);
+        get_claims_by_id(req,res,decoded_token);
     });
 }
 
