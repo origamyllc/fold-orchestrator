@@ -16,13 +16,13 @@ var m_agent = request.agent("http://localhost:9100");
 var agent = request.agent(app);
 
 describe('4. it should be able to verify jwt token', () => {
+
     before( function(){
-        mocks.bootstrap();
+        mocks.bootstrap()
     });
 
     it('4.1 should verify JWT token ', (done) => {
         jwt.verify(stubs.jwt_token.response.value , 'hhhhhh', (err, decoded_token) => {
-
             expect(decoded_token.userId ).to.equal('57aec655adeceec90f543e0f');
             expect(decoded_token.username ).to.equal('marge');
             expect(decoded_token.roles ).to.equal('catalog.admin');
@@ -44,11 +44,13 @@ describe('4. it should be able to verify jwt token', () => {
 
     it('4.3 should be able to set the x-authorization-header ', (done) => {
 
-        let token = { userId: '57aec655adeceec90f543e0f',
+        let token = {
+                userId: '57aec655adeceec90f543e0f',
                 username: 'marge',
                 roles: [ 'catalog.admin' ],
                 claimsId: '57aec655adeceec90f543e13',
-                iat: 1472097048 };
+                iat: 1472097048
+        };
 
         var claims = stubs.claims_stub;
 

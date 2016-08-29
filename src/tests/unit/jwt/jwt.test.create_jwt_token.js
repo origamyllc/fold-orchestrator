@@ -30,9 +30,9 @@ describe('1. should  create JWT token when username and password is posted  ', (
                 let jwt_object = {};
                 expect(JSON.stringify(user_info)).to.equal(JSON.stringify(stubs.user_stub));
                 if (user_info) {
-                    jwt_object.userId = user_info._id;
-                    jwt_object.username = user_info.username;
-                    jwt_object.roles = user_info.roles;
+                    jwt_object.userId = user_info.docs[0]._id;
+                    jwt_object.username = user_info.docs[0].username;
+                    jwt_object.roles = user_info.docs[0].roles;
                 }
                 expect(JSON.stringify(jwt_object)).to.equal(JSON.stringify(stubs.jwt_object));
                 if (err) return done(err)

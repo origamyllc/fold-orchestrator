@@ -76,7 +76,7 @@ describe(' should  create JWT token when username and password is posted', () =>
         });
     });
 
-    describe('2 should get  user info by username', () => {
+    describe('2 should get role info  by role name', () => {
     it('2.1  should get role info  by role name ', (done) => {
         m_server
             .get('/api/v1/roles/name/catalog.admin')

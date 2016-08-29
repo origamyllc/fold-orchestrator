@@ -16,7 +16,7 @@ export const  user_stub = {
 };
 
 export const jwt_object = {
-    userId: '57aec655adeceec90f543e0f',
+    userId: '57aec655adeceec90f543e10',
     username: 'bart',
     roles: [ 'catalog.admin' ]
 }
@@ -31,16 +31,20 @@ export const role_stub  = {
  }
 
 export const claims_stub  = {
-    name:'catalog.admin.claims',
-    description:'Has full admin rights for the catalog',
-    applications:[],
-    devices:[],
-    api_white_list:[
-        {"/catalog/devices":"Y"},
-        {"/catalog/application":"Y"},
-        {"/catalog/api":"Y"}
-    ]
-}
+    "docs":
+        [{"_id":"57aec655adeceec90f543e13",
+            "updated_at":"2016-08-13T07:03:49.770Z",
+            "created_at":"2016-08-13T07:03:49.770Z",
+            "name":"catalog.admin.claims",
+            "description":"Has full admin rights for the catalog",
+            "api_white_list":[
+                {"/catalog/devices":"Y"},
+                {"/catalog/application":"Y"},
+                {"/catalog/api":"Y"}
+            ],
+            "__v":0,"applications":[],
+            "devices":[]}]
+        }
 
 
 export const jwt_token = {
