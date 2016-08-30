@@ -19,7 +19,6 @@ describe('3. it should be able to get jwt token', () => {
                 expect(res.status).to.equal(200);
                 expect(res.body.response.value).to.equal(stubs.jwt_token.response.value);
                 if (err) return done(err)
-
             });
         done()
     });
