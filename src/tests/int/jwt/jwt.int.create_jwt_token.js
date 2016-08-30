@@ -3,7 +3,7 @@
  */
 
 import * as stubs from '../../stubs/test.bootstrap.stubs.js';
-import { cutRouter  } from '../../../cut/index.js';
+
 const request = require('supertest');
 const expect = require('chai').expect;
 const  jwt = require('jsonwebtoken');
