@@ -50,30 +50,22 @@ function handleResponse (access_key, jwt_token , req, res){
 function get_user_info_by_name(req) {
     return  new Promise( (resolve) => {
         let jwt_object = {};
-        log.info( " Getting  user info for user:: " + JSON.stringify( req.body ));
         orchestrator_fascade.get_user_by_name(req.body.username).then((user) => {
-           log.info( "Got user info::" + JSON.stringify(user) );
             if (user) {
                 jwt_object.userId = user.docs[0]._id;
                 jwt_object.username = user.docs[0].username;
                 jwt_object.roles = user.docs[0].roles;
             }
             resolve(jwt_object);
-        }).catch(() => {
-            log.error("Can not get user by user name ");
         });
     });
 }
 
 const get_role_by_name = function (jwt_object) {
     return  new Promise( (resolve) => {
-        log.info(" Getting role info by name::"+ jwt_object.roles );
         orchestrator_fascade.get_role_by_role_name(jwt_object.roles).then((role) => {
-            log.info( "Got role info::" + JSON.stringify(role) );
             jwt_object.claimsId = role.docs[0].claims;
             resolve(jwt.sign(jwt_object,'hhhhhh'));
-        }).catch(() => {
-            log.error("Can not get role by user name::" +  jwt_object.username );
         });
     });
 }
@@ -85,7 +77,6 @@ function save_token(access_key ,jwt_token){
                 setKey(access_key,jwt_token)
             }
             else {
-                log.error("Token already exists");
                 resolve(false);
             }
         }).catch(() => {
@@ -97,7 +88,6 @@ function save_token(access_key ,jwt_token){
 function setKey(access_key,jwt_token){
     return new Promise((resolve,reject) => {
         var obj = { key: access_key, value :"Bearer "+ jwt_token };
-        log.info(" Setting jwt token as key for access token "+ access_key );
         orchestrator_fascade.set_token_in_cache(obj).then(() => {
             resolve(true);
         }).catch((err) => {
