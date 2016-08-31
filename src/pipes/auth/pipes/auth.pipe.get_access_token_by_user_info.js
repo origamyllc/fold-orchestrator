@@ -7,34 +7,46 @@ export function get_access_token_by_user(req, res) {
 }
 
 const initialize_pipe = function (req,res) {
-    return new Promise(() => {
-        req.log.info( "login in user " + req.body.username);
+    login_user (req)
+        .then(get_user_by_name)
+        .then(get_user_token_by_id)
+        .then((token) => {
+             responses.send_response(res, {"accesstoken": token.docs[0].accessToken })
+        }).catch( () => {
+             req.log.error("getting token for user " + req.body.username+ "failed !");
+             responses.send_unauthorized_user_error(req, res);
+        });
+}
+
+
+function login_user (req){
+    return new Promise((resolve) => {
         authentication_fascade.login_user(req).then( (user) =>  {
-            get_user_by_name(req,res,JSON.parse(user)["username"])
-        }).catch(() => {
-            req.log.error("login in user " + req.body.username + "failed !");
-            responses.send_unauthorized_user_error(req, res);
+            resolve(user);
+        }).catch((err) => {
+            resolve(err);
         });
     });
 }
 
-function get_user_by_name(req,res,user_name) {
-    req.log.info( "getting user info for user " + user_name);
-    authentication_fascade.get_user_by_name(user_name).then((user_id) => {
-        get_user_token_by_id(req,res,user_id.docs[0]._id);
-    }).catch(() => {
-        req.log.error( "getting user info for user " + user_name + "failed !");
-        responses.send_unauthorized_user_error(req, res);
+const get_user_by_name =  function (user) {
+   var user_name = JSON.parse(user)["username"];
+    return new Promise((resolve) => {
+        authentication_fascade.get_user_by_name(user_name).then((user) => {
+           resolve(user.docs[0]._id);
+        }).catch((err) => {
+            resolve(err);
+        });
     });
 }
 
-function get_user_token_by_id(req,res,user_id) {
-    req.log.info({message: "getting token by id " + user_id});
-    authentication_fascade.get_user_token_by_id(user_id).then((token) => {
-        responses.send_response(res, {"accesstoken": token.docs[0].accessToken })
-    }).catch(() => {
-        req.log.error("getting token by id " + user_id + "failed !");
-        responses.send_unauthorized_user_error(req, res);
+const get_user_token_by_id =  function (user_id) {
+    return new Promise((resolve) => {
+        authentication_fascade.get_user_token_by_id(user_id).then((token) => {
+              resolve(token);
+        }).catch((err) => {
+            resolve(err);
+        });
     });
 }
 

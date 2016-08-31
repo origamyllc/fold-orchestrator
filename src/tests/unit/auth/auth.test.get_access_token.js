@@ -14,12 +14,9 @@ const expect = require('chai').expect;
 
 var agent = request.agent(app);
 var m_agent = request.agent("http://localhost:9100");
-var b_agent = request.agent("http://localhost:9000");
 
 
 describe('1. it should be able to get access token', () => {
-
-    var agent = request.agent(app);
 
     before( function(){
         mocks.bootstrap();
