@@ -21,13 +21,14 @@ describe(' should verify JWT token', () => {
 
         o_agent
             .get('/api/v1/jwttoken/verify')
-            .set("authorization", "Bearer "+  stubs.jwt_token.response.value )
+            .set("authorization", "Bearer "+  stubs.correct_jwt_token.response.value )
             .end( (err, res) =>  {
                 expect(res.status).to.equal(200);
-                // if (err) return done(err)
+                if (err) return done(err);
                 done()
             });
     });
+
 
     after(function () {
         http_server.close();
