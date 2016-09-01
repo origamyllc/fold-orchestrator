@@ -12,15 +12,6 @@ var m_server = request.agent("http://localhost:9100");
 
 describe('4  it should be able to verify jwt token', () => {
 
-    it('4.1 should verify JWT token ', (done) => {
-        jwt.verify(stubs.jwt_token.response.value , 'hhhhhh', (err, decoded_token) => {
-            expect(decoded_token.userId ).to.equal('57aec655adeceec90f543e0f');
-            expect(decoded_token.username ).to.equal('marge');
-            expect(decoded_token.roles ).to.equal('catalog.admin');
-            expect(decoded_token.claimsId ).to.equal('57aec655adeceec90f543e13');
-        });
-        done();
-    });
 
     describe('4.1 should be able to get claims by claim id ', () => {
 

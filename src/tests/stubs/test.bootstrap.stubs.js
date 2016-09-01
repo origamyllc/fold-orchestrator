@@ -48,11 +48,18 @@ export const claims_stub  = {
 
 
 export const jwt_token = {
-    response: {
-        value:  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1N2FlYzY1NWFkZWNlZWM5MGY1NDNlMGYiLCJ1c2VybmFtZSI6Im1hcmdlIiwicm9sZXMiOlsiY2F0YWxvZy5hZG1pbiJdLCJjbGFpbXNJZCI6IjU3YWVjNjU1YWRlY2VlYzkwZjU0M2UxMyIsImlhdCI6MTQ3MjEwNDM4MH0.qJjSi46JyJ6NjaKpVi18jg1RH5BL7XfsdyulEobyZdg'
+    "response": {
+        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1N2FlYzY1NWFkZWNlZWM5MGY1NDNlMGUiLCJ1c2VybmFtZSI6ImhvbWVyIiwicm9sZXMiOlsiY2F0YWxvZy5hZG1pbiJdLCJjbGFpbXMiOiI1N2FlYzY1NWFkZWNlZWM5MGY1NDNlMTMiLCJpYXQiOjE0NzExNjk2OTl9.pWHk1ztxsaTsHYK9deQYpi5J5EyZ1ZP_hVlF6Lbus1s"
     },
-    status:200
-};
+    "status": 200
+}
+
+export const token_stub = {"docs":[ {"_id":"57aec65badeceec90f543e16",
+        "updated_at":"2016-08-13T07:03:55.959Z",
+        "created_at":"2016-08-13T07:03:55.959Z",
+        "userId":"57aec655adeceec90f543e10",
+        "accessToken":"abb0d6af-bafc-4f32-b698-88878a1911f9",
+        "__v":0}]};
 
 export const access_token = '6d3323f5-e9ec-4717-90ea-b3217cda1333';
 

@@ -29,7 +29,7 @@ function  get_jwt_token_by_access_token( access_key  ){
     return   new Promise((resolve) => {
         var error = { error : "can not get jwt token by access token " }
         orchestrator_fascade.get_jwt_token_by_access_token(access_key).then((jwt_token) => {
-                resolve(jwt_token);
+            resolve(jwt_token);
         }).catch(() => {
             resolve(error);
         });
