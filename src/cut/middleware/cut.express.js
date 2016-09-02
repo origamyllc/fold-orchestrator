@@ -12,26 +12,22 @@ import * as http from 'http';
 import  cookieParser  from 'cookie-parser';
 import  cors  from 'cors';
 import session from 'express-session';
-import { request } from  './../components/request/cut.components.request';
 import { settings } from '../../constants/constants.js';
-import { Logger } from './logger/cut.middleware.logger.js';
 import { Secure } from './security/cut.security.passport.js';
 
-const passport = require('passport');
 const morgan = require('morgan');
 const methodOverride = require('method-override');
-const  RedisStore = require('connect-redis')(session);
-
 export const app = express();
-export const router = express.Router();
 const port = settings.orchestrator.port;
+export const router = express.Router();
+const grunth  = require('grunth');
 
 const ExpressRequest = function (req, res, next) {
-    request(req);
+    grunth.hook(req,app);
     next();
 };
 
-app.use(morgan('dev')); // log every request to the console
+//app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
@@ -58,10 +54,10 @@ Secure(app);
 let server = http.createServer(app);
      server.listen( port );
 
-export const listen = function () {
-    server.listen.apply(server, arguments);
+export const cut = {
+    run:function (port) {
+        http.createServer(app);
+        server.listen( port );
+    }
 };
 
-export const close = function (callback) {
-     server.close(callback);
-};

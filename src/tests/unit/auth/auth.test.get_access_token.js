@@ -11,7 +11,6 @@ import * as mocks from '../../mocks/test.bootstrap.mocks.js';
 
 const expect = require('chai').expect;
 
-
 var agent = request.agent(app);
 var m_agent = request.agent("http://localhost:9100");
 

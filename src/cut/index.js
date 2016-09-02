@@ -9,7 +9,8 @@ const http = require('./components/http/cut.components.http');
 const rabbit = require('./components/rabbit/cut.components.rabbitmq');
 const response = require('./components/responses/cut.components.responses');
 const  authentications = require('./middleware/security/cut.security.utils');
-import { logger } from './middleware/logger/cut.middleware.bunyan';
+
+const grunth  = require ('grunth');
 
 // ROUTERS
 export const cutRouter = router;
@@ -22,7 +23,7 @@ export const RABBIT = rabbit;
 
 // HTTP
 export const HTTP = http;
-export const log = logger;
+export const $logger = grunth.$logger;
 
 // UTILS
 export const responses = response;
