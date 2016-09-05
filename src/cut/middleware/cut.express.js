@@ -22,12 +22,8 @@ const port = settings.orchestrator.port;
 export const router = express.Router();
 const grunth  = require('grunth');
 
-const ExpressRequest = function (req, res, next) {
-    grunth.hook(req,app);
-    next();
-};
 
-//app.use(morgan('dev')); // log every request to the console
+
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
@@ -47,17 +43,14 @@ app.use(methodOverride((req) => {
 }));
 
 
-app.use(ExpressRequest);
-
 Secure(app);
+app.use(function(req,res,next){
+    grunth.use(app)
+    req.log = grunth.hook(req);
+    next()
+});
 
 let server = http.createServer(app);
+export const http_server = server;
      server.listen( port );
-
-export const cut = {
-    run:function (port) {
-        http.createServer(app);
-        server.listen( port );
-    }
-};
 

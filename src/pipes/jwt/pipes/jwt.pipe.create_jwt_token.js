@@ -1,10 +1,12 @@
 "use strict";
 
-import { responses,$logger } from '../../../cut/index';
+import { responses } from '../../../cut/index';
 import * as orchestrator_fascade from '../orchestrator/jwt.orchestrator.fascade';
 const  jwt = require('jsonwebtoken');
+let $logger = null;
 
 export function create_jwt_token(req,res){
+     $logger = req.log;
     $logger.info("entering create_jwt_token ");
     initialize_pipe.call(initialize_pipe,req,res);
 }
@@ -32,7 +34,7 @@ function handleResponse (access_key, jwt_token , req, res){
         if (isSaved) {
             $logger.info("create_jwt_token::jwt token set in header and saved");
             res.setHeader("authorization", jwt_token.response.value);
-            responses.sendSuccessResponse(res, {"message": "authorized"});
+            res.status(200).send({"message": "authorized"});
         }
         else {
             $logger.error("create_jwt_token::can not create  JWT token ");

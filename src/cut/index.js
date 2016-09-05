@@ -2,15 +2,16 @@
  * Created by prashun on 6/10/16.
  */
 
-import { app,router } from './middleware/cut.express';
+import { app,router} from './middleware/cut.express';
 
 const lru = require('./components/cache/lru/cut.components.cache.lru');
 const http = require('./components/http/cut.components.http');
 const rabbit = require('./components/rabbit/cut.components.rabbitmq');
 const response = require('./components/responses/cut.components.responses');
 const  authentications = require('./middleware/security/cut.security.utils');
+const bunyan = require('bunyan')
+const logger =  bunyan.createLogger({name:'play'});
 
-const grunth  = require ('grunth');
 
 // ROUTERS
 export const cutRouter = router;
@@ -23,7 +24,10 @@ export const RABBIT = rabbit;
 
 // HTTP
 export const HTTP = http;
-export const $logger = grunth.$logger;
+
+
+
+export const $logger = logger;
 
 // UTILS
 export const responses = response;

@@ -6,7 +6,7 @@
  */
 
 import * as stubs from '../../stubs/test.bootstrap.stubs.js';
-import * as http_server from '../../../cut/middleware/cut.express.js';
+import { http_server } from '../../../cut/middleware/cut.express.js';
 import * as routes from '../../../server.js';
 const request = require('supertest');
 const expect = require('chai').expect;

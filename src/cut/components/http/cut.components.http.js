@@ -46,8 +46,6 @@ export function del(options,callback){
 
 export function post(options,body,callback){
 
-
-
     let postData = JSON.stringify(body);
     let dataChunk = "";
     

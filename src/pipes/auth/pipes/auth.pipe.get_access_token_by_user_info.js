@@ -1,8 +1,10 @@
-import { responses,$logger } from '../../../cut/index';
+import { responses } from '../../../cut/index';
 import * as authentication_fascade from '../orchestrator/auth.orchestrator.fascade';
 const uuid = require('node-uuid');
+let $logger = null;
 
 export function get_access_token_by_user(req, res) {
+    $logger = req.log;
     $logger.info("getting access token by user");
     initialize_pipe.call(initialize_pipe,req,res);
 }
@@ -12,7 +14,7 @@ const initialize_pipe = function (req,res) {
         .then(get_user_id_by_name)
         .then(get_user_token_by_id)
         .then((token) => {
-             responses.send_response(res, {"accesstoken": token.docs[0].accessToken })
+             res.status(200).send({"accesstoken": token.docs[0].accessToken });
         }).catch( () => {
              $logger.error("getting token for user " + req.body.username+ "failed !");
              responses.send_unauthorized_user_error(req, res);
@@ -51,7 +53,7 @@ const get_user_token_by_id =  function (user_id) {
               $logger.info("get_access_token_by_user::got token by user id "+ user_id);
               resolve(token);
         }).catch((err) => {
-            $logger.info("get_access_token_by_user::error gwtting token for user id "+ user_id);
+            $logger.info("get_access_token_by_user::error getting token for user id "+ user_id);
             resolve(err);
         });
     });
