@@ -1,6 +1,8 @@
 /**
  * Created by prashun on 8/16/16.
  */
+import * as stubs from '../../stubs/test.bootstrap.stubs.js';
+import * as mocks from '../../mocks/test.bootstrap.mocks.js';
 
 const request = require('supertest');
 const express = require('express');

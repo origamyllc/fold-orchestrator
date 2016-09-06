@@ -32,9 +32,9 @@ describe(' should  create JWT token when username and password is posted', () =>
             .set("authorization",stubs.access_token)
             .end( (err, res) =>  {
                 expect(res.status).to.equal(200);
-                // if (err) return done(err)
-                done()
+                if (err) return done(err);
             });
+           done();
     });
 
     it('1. return error if the jwt token has already been created', (done) => {
@@ -48,9 +48,9 @@ describe(' should  create JWT token when username and password is posted', () =>
             .set("authorization",stubs.access_token)
             .end( (err, res) =>  {
                 expect(res.status).to.equal(500);
-                if (err) return done(err)
-                done()
+                if (err) return done(err);
             });
+            done();
     });
 
     it('2. return error if the accesstoken is empty', (done) => {
@@ -64,9 +64,9 @@ describe(' should  create JWT token when username and password is posted', () =>
             .set("authorization",'')
             .end( (err, res) =>  {
                 expect(res.status).to.equal(500);
-                if (err) return done(err)
-                done()
+                if (err) return done(err);
             });
+           done();
     });
 
 
@@ -83,8 +83,8 @@ describe(' should  create JWT token when username and password is posted', () =>
             .end( (err, res) =>  {
                 expect(res.status).to.equal(500);
                 if (err) return done(err)
-                done()
             });
+        done();
     });
 
     after(function () {

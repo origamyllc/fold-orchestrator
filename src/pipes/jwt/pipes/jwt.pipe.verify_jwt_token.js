@@ -18,10 +18,9 @@ const initialize_pipe = function (req,res) {
     let token = req.headers.authorization.split(" ")[1] ;
     jwt.verify(token, 'hhhhhh', (err, decoded_token) => {
         if(err){
-            responses.sendErrorResponse(res ,{
-                message:err.message ,
-                errorCode:5002 ,
-                type:err.name
+            responses.send_bad_implementation_response(res, {
+                message: err.message,
+                details: "access token empty or null "
             });
         }
         get_claims_by_id(res,decoded_token);
@@ -51,12 +50,14 @@ function get_claims_by_id(res,token){
             res.setHeader("x-transaction-id", newToken);
 
             $logger.info("verify_jwt_token::set token as header ");
-            res.status(200).send({"message": "authorized"})
+            res.status(200).send({"message": "authorized" , "status":200 })
         }).catch(() => {
-            $logger.error("JWT token verification failed no claims exist");
             var error = "JWT token verification failed no claims exist" ;
-            var boom  = Boom.create( 500, error  );
-            res.status(500).send(boom);
+            $logger.error(error);
+            responses.send_bad_implementation_response(res, {
+                message: error,
+                details: "access token empty or null "
+            });
         });
     }
 }

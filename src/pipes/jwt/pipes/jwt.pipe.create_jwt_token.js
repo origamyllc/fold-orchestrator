@@ -6,7 +6,7 @@ const  jwt = require('jsonwebtoken');
 let $logger = null;
 
 export function create_jwt_token(req,res){
-     $logger = req.log;
+    $logger = req.log;
     $logger.info("entering create_jwt_token ");
     initialize_pipe.call(initialize_pipe,req,res);
 }
@@ -21,7 +21,7 @@ const initialize_pipe  = function  (req,res){
                          handleResponse ( access_key, jwt_token , req, res);
                      }
                      else {
-                         responses.sendErrorResponse(res, {
+                         responses.send_bad_implementation_response(res, {
                              message: 'JWT Not created',
                              details: "access token empty or null "
                          });
@@ -29,7 +29,7 @@ const initialize_pipe  = function  (req,res){
                 });
 }
 
-function handleResponse (access_key, jwt_token , req, res){
+function handleResponse (access_key, jwt_token , res){
     save_token(access_key, jwt_token).then((isSaved) => {
         if (isSaved) {
             $logger.info("create_jwt_token::jwt token set in header and saved");
@@ -38,14 +38,14 @@ function handleResponse (access_key, jwt_token , req, res){
         }
         else {
             $logger.error("create_jwt_token::can not create  JWT token ");
-            responses.sendErrorResponse(res, {
+            responses.send_bad_implementation_response(res, {
                 message: 'JWT Not created',
                 details: "JWT Token already exists for the given access token "
             });
         }
     }).catch(() => {
         $logger.error("create_jwt_token::can not create  JWT token ");
-        responses.sendErrorResponse(res, {
+        responses.send_bad_implementation_response(res, {
             message: 'JWT Not created',
             details: "JWT Token already exists for the given access token "
         });
@@ -91,7 +91,6 @@ function save_token(access_key ,jwt_token){
                 resolve(false);
             }
         }).catch(() => {
-
             setKey(access_key,jwt_token)
         });
     });

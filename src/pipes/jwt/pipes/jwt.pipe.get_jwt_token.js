@@ -22,7 +22,7 @@ const initialize_pipe = function (req,res) {
         const access_key = req.headers.authorization ;
         get_jwt_token_by_access_token(  access_key ).then( (jwt_token) => {
              res.setHeader("authorization",  jwt_token.response.value);
-             res.status(200).send({"message":"jwt returned","status":200})
+             res.status(200).send({"message":"jwt returned","status":200});
              $logger.info("get_jwt_token::got JWT token and set header ");
         }).catch( () => {
              $logger.error("get_jwt_token::can not get JWT token ");

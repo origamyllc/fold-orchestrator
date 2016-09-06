@@ -17,12 +17,18 @@ function  sendError(obj){
 
 // Todo:rename to send_bad_implementation_response
 export function sendErrorResponse(res ,obj){
-    var  error = Boom.badImplementation('terrible implementation by developer');
+    var  error = Boom.badImplementation( obj );
     res.status(500).json(error);
 }
 
-export function send_unauthorized_user_error(req, res) {
+export function send_bad_implementation_response(res ,obj){
+    var  error = Boom.badImplementation( obj );
+     res.status(500).json(error);
+}
+
+
+export function send_unauthorized_user_error( res ) {
     const error = Boom.unauthorized('invalid username or password');
-    res.status(401).json(error);
+    res.status(401).json(error.output.payload);
 }
 

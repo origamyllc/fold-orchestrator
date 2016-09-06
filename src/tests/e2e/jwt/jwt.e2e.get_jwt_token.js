@@ -24,10 +24,10 @@ describe(' should verify JWT token', () => {
             .set("authorization",stubs.access_token)
             .end( (err, res) =>  {
                 expect(res.status).to.equal(200);
-                expect(res.text).to.equal(JSON.stringify({"response":"SUCCESS!","status":200}));
+                expect(res.text).to.equal(JSON.stringify({"message":"jwt returned","status":200}));
                 if (err) return done(err)
-                done()
             });
+            done();
     });
 
     it('1.1 should throw error when access token is not set ', (done) => {
@@ -38,8 +38,8 @@ describe(' should verify JWT token', () => {
                 expect(res.status).to.equal(401);
                 expect(res.text).to.equal(JSON.stringify({ message: 'unauthorized access' }));
                 if (err) return done(err)
-                done()
             });
+            done();
     });
 
     it('1.2 should throw error when access token is wrong ', (done) => {
@@ -51,8 +51,8 @@ describe(' should verify JWT token', () => {
                 expect(res.status).to.equal(401);
                 expect(res.text).to.equal(JSON.stringify({ message: 'unauthorized access' }));
                 if (err) return done(err)
-                done()
             });
+            done();
     });
 
     after(function () {
