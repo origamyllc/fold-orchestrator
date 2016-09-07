@@ -10,24 +10,16 @@ const rabbit = require('./components/rabbit/cut.components.rabbitmq');
 const response = require('./components/responses/cut.components.responses');
 const  authentications = require('./middleware/security/cut.security.utils');
 const bunyan = require('bunyan')
-const logger =  bunyan.createLogger({name:'play'});
-
 
 // ROUTERS
 export const cutRouter = router;
 
 // MODULES
 export const LRU = lru;
-
 export const RABBIT = rabbit;
-
 
 // HTTP
 export const HTTP = http;
-
-
-
-export const $logger = logger;
 
 // UTILS
 export const responses = response;
