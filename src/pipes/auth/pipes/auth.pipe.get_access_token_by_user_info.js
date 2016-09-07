@@ -53,7 +53,7 @@ const get_user_token_by_id =  function (user_id) {
               $logger.info("get_access_token_by_user::got token by user id "+ user_id);
               resolve(token);
         }).catch((err) => {
-            $logger.info("get_access_token_by_user::error getting token for user id "+ user_id);
+            $logger.error("get_access_token_by_user::error getting token for user id "+ user_id);
             resolve(err);
         });
     });
