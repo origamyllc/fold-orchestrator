@@ -3,11 +3,9 @@
  */
 "use strict";
 
-import { responses  } from '../../../cut/index';
+import { responses  } from 'hulk-cut';
 import * as orchestrator_fascade from '../orchestrator/jwt.orchestrator.fascade';
 const  jwt = require('jsonwebtoken');
-import * as Boom from 'boom';
-
 
 let $logger = null;
 
@@ -39,9 +37,8 @@ function  get_jwt_token_by_access_token( access_key  ){
             $logger.info('get_jwt_token::got JWT token for access token ' + access_key );
         }).catch(() => {
             var error =  "can not get jwt token for access token " + access_key ;
-            var boom  = Boom.create( 500, error );
             $logger.error('get_jwt_token::'+ error );
-            resolve(boom);
+            resolve({error:error});
         });
     });
 }

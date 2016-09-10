@@ -4,6 +4,6 @@
 
 
 import { authentication_router } from './orchestrator/auth.route';
-import { app,router } from '../../cut/middleware/cut.express';
+import { server } from 'hulk-cut';
 
-app.use(  authentication_router );
+server.use(  authentication_router );

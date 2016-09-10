@@ -1,5 +1,5 @@
 "use strict";
-import  { HTTP } from '../../../cut/index';
+import  { HTTP } from 'hulk-cut';
 import * as CONSTANTS from '../../../constants/constants';
 
 /**

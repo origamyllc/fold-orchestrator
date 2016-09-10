@@ -1,6 +1,6 @@
 "use strict";
 
-import { responses } from '../../../cut/index';
+import { responses } from 'hulk-cut';
 import * as orchestrator_fascade from '../orchestrator/jwt.orchestrator.fascade';
 const  jwt = require('jsonwebtoken');
 let $logger = null;

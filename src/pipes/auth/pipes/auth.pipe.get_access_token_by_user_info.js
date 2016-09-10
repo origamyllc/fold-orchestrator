@@ -1,4 +1,4 @@
-import { responses } from '../../../cut/index';
+import { responses } from 'hulk-cut';
 import * as authentication_fascade from '../orchestrator/auth.orchestrator.fascade';
 const uuid = require('node-uuid');
 let $logger = null;
@@ -16,8 +16,9 @@ const initialize_pipe = function (req,res) {
         .then((token) => {
              res.status(200).send({"accesstoken": token.docs[0].accessToken });
         }).catch( () => {
-             $logger.error("getting token for user " + req.body.username+ "failed !");
              responses.send_unauthorized_user_error(req, res);
+           // res.status(401).send({error:"error"})
+             $logger.error("getting token for user " + req.body.username+ " failed !");
         });
 }
 

@@ -2,7 +2,7 @@
  * Created by prashun on 8/15/16.
  */
 
-import { responses } from '../../../cut/index';
+import { responses } from 'hulk-cut';
 import * as orchestrator_fascade from '../orchestrator/jwt.orchestrator.fascade';
 const  jwt = require('jsonwebtoken');
 const uuid = require('node-uuid');
