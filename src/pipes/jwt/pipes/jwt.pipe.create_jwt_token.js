@@ -102,10 +102,10 @@ function setKey(access_key,jwt_token){
     return new Promise((resolve,reject) => {
         var obj = { key: access_key, value :"Bearer "+ jwt_token };
         orchestrator_fascade.set_token_in_cache(obj).then(() => {
-            $logger.info("create_jwt_token::saved jwt token for access key" );
+            $logger.info("create_jwt_token:: setKey :: saved jwt token for access key" );
             resolve(true);
         }).catch((err) => {
-            $logger.error("create_jwt_token::failed to save jwt token for access key" );
+            $logger.error("create_jwt_token :: setKey :: failed to save jwt token for access key" );
            reject(false);
         });
     });
