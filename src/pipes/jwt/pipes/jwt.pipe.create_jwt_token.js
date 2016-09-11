@@ -12,15 +12,17 @@ export function create_jwt_token(req,res){
 }
 
 const initialize_pipe  = function  (req,res){
-            $logger.info("create_jwt_token::creating jwt token ");
+            $logger.info("create_jwt_token::initialize_pipe :: creating jwt token ");
              get_user_info_by_name(req, res )
             .then( get_role_by_name )
             .then( (jwt_token) => {
                      const access_key = req.headers.authorization ;
+                     $logger.info("create_jwt_token :: initialize_pipe :: creating jwt token for access key " + access_key );
                      if(access_key && access_key !== '') {
                          handleResponse ( access_key, jwt_token , req, res);
                      }
                      else {
+                          $logger.error("create_jwt_token :: initialize_pipe :: creating jwt token for access key " + access_key + "failed!" );
                          responses.send_bad_implementation_response(res, {
                              message: 'JWT Not created',
                              details: "access token empty or null "
@@ -56,8 +58,8 @@ function get_user_info_by_name(req) {
     return  new Promise( (resolve) => {
         let jwt_object = {};
         orchestrator_fascade.get_user_by_name(req.body.username).then((user) => {
-            $logger.info("create_jwt_token::sucessfully got user info for user " + req.body.username );
-            $logger.info("create_jwt_token::creating jwt object");
+            $logger.info("create_jwt_token:: get_user_info_by_name :: sucessfully got user info for user " + req.body.username );
+            $logger.info("create_jwt_token:: get_user_info_by_name :: creating jwt object");
             if (user) {
                 jwt_object.userId = user.docs[0]._id;
                 jwt_object.username = user.docs[0].username;
@@ -71,10 +73,10 @@ function get_user_info_by_name(req) {
 const get_role_by_name = function (jwt_object) {
     return  new Promise( (resolve) => {
         orchestrator_fascade.get_role_by_role_name(jwt_object.roles).then((role) => {
-            $logger.info("create_jwt_token::sucessfully got role info for role " + jwt_object.roles );
+            $logger.info("create_jwt_token:: get_role_by_name :: sucessfully got role info for role " + jwt_object.roles );
             jwt_object.claimsId = role.docs[0].claims;
             let token =jwt.sign(jwt_object,'hhhhhh');
-            $logger.info("create_jwt_token::created jwt object");
+            $logger.info("create_jwt_token:: get_role_by_name :: created jwt object");
             resolve(token);
         });
     });
@@ -100,11 +102,11 @@ function setKey(access_key,jwt_token){
     return new Promise((resolve,reject) => {
         var obj = { key: access_key, value :"Bearer "+ jwt_token };
         orchestrator_fascade.set_token_in_cache(obj).then(() => {
-            $logger.info("create_jwt_token::saved jwt token for access key" );
+            $logger.info("create_jwt_token:: setKey :: saved jwt token for access key" );
             resolve(true);
         }).catch((err) => {
-            $logger.error("create_jwt_token::failed to save jwt token for access key" );
-           reject(false);
+            $logger.error("create_jwt_token :: setKey :: failed to save jwt token for access key" );
+            reject(false);
         });
     });
 }
