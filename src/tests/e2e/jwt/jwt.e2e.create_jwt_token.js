@@ -6,7 +6,7 @@
  */
 
 import * as stubs from '../../stubs/test.bootstrap.stubs.js';
-import { http_server } from '../../../cut/middleware/cut.express.js';
+import { server } from 'hulk-cut';
 import * as routes from '../../../server.js';
 const request = require('supertest');
 const expect = require('chai').expect;
@@ -18,7 +18,7 @@ var o_agent = request.agent("http://localhost:9200");
 describe(' should  create JWT token when username and password is posted', () => {
 
     before( function(){
-        http_server.listen(9200)
+        server.listen(9200)
     });
 
     xit('1. set jwt if the access token is set in the req header ', (done) => {
@@ -88,7 +88,7 @@ describe(' should  create JWT token when username and password is posted', () =>
     });
 
     after(function () {
-        http_server.close();
+         server.close();
     });
 
 });

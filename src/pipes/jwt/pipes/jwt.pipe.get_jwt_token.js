@@ -24,7 +24,10 @@ const initialize_pipe = function (req,res) {
              $logger.info("get_jwt_token::got JWT token and set header ");
         }).catch( () => {
              $logger.error("get_jwt_token::can not get JWT token ");
-             responses.send_unauthorized_user_error(req, res);
+             responses.send_unauthorized_error(res, {
+                 details : { message:"can not get JWT token" } ,
+                 statusCode:11000
+             });
         });
     });
 

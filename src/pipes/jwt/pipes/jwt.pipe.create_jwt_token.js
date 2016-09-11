@@ -103,7 +103,7 @@ function setKey(access_key,jwt_token){
             $logger.info("create_jwt_token::saved jwt token for access key" );
             resolve(true);
         }).catch((err) => {
-            $logger.ierror("create_jwt_token::failed to save jwt token for access key" );
+            $logger.error("create_jwt_token::failed to save jwt token for access key" );
            reject(false);
         });
     });

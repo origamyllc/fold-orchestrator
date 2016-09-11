@@ -3,7 +3,7 @@
  */
 
 import * as stubs from '../../stubs/test.bootstrap.stubs.js';
-import { http_server } from '../../../cut/middleware/cut.express.js';
+import { server } from 'hulk-cut';
 import * as routes from '../../../server.js';
 const request = require('supertest');
 const expect = require('chai').expect;
@@ -14,7 +14,7 @@ var o_agent = request.agent("http://localhost:9200");
 describe(' should verify JWT token', () => {
 
     before( function(){
-        http_server.listen(9200)
+       server.listen(9200)
     });
 
     it('1. set jwt if the access token is set in the req header ', (done) => {
@@ -31,7 +31,7 @@ describe(' should verify JWT token', () => {
 
 
     after(function () {
-        http_server.close();
+        server.close();
     });
 
 });
