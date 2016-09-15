@@ -28,7 +28,7 @@
     "bunyan": "^1.8.1",
     "bunyan-prettystream": "^0.1.3",
     "codacy-coverage": "^1.1.3",
-    "hulk-cut":"0.0.8-dv",
+    "hulk-cut":"0.0.10-dv",
     "istanbul": "^0.3.22",
     "jsonwebtoken": "^7.1.6",
     "node-uuid": "^1.4.7",
