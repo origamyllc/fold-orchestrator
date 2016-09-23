@@ -1,5 +1,5 @@
 
 import { jwt_router } from './orchestrator/jwt.route';
-import { server } from 'hulk-cut';
+import { $app } from 'hulk-cut';
 
-server.use( jwt_router  );
+$app.use( jwt_router  );

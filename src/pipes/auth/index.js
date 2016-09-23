@@ -4,6 +4,6 @@
 
 
 import { authentication_router } from './orchestrator/auth.route';
-import { server } from 'hulk-cut';
+import { $app } from 'hulk-cut';
 
-server.use(  authentication_router );
+$app.use(  authentication_router );
